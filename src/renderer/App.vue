@@ -3,13 +3,3 @@
     <router-view></router-view>
   </div>
 </template>
-
-<script>
-  export default {
-    name: 'Waiting'
-  }
-</script>
-
-<style>
-  /* CSS */
-</style>

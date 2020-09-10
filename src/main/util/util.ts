@@ -79,7 +79,7 @@ function createWebAPIRequest(host: string, path: string, method: string, data: a
   })
 }
 
-function createRequest(path: any, method: any, data: any) {
+function createRequest(path: string, method: string, data: any) {
   return new Promise((resolve, reject) => {
     const options: any = {
       url: `http://music.163.com${path}`,

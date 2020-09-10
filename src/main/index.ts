@@ -1,8 +1,5 @@
-import {
-  app,
-  BrowserWindow,
-  ipcMain
-} from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import { Request, Response } from 'express'
 
 import routes from './routers'
 
@@ -16,7 +13,7 @@ if (process.env.NODE_ENV !== 'development') {
     .replace(/\\/g, '\\\\')
 }
 
-let mainWindow: any
+let mainWindow: BrowserWindow | null
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -33,9 +30,9 @@ function createWindow() {
   const app = express()
 
   // 跨域设置
-  app.all('*', function(req: any, res: any, next: Function) {
+  app.all('*', function(req: Request, res: Response, next: Function) {
     if (req.path !== '/' && !req.path.includes('.')) {
-      res.header('Access-Control-Allow-Credentials', true)
+      res.header('Access-Control-Allow-Credentials', 'true')
       // 这里获取 origin 请求头 而不是用 *
       res.header('Access-Control-Allow-Origin', req.headers['origin'] || '*')
       res.header('Access-Control-Allow-Headers', 'X-Requested-With')
@@ -44,13 +41,13 @@ function createWindow() {
     }
     next()
   })
-  const onlyStatus200 = (req: any, res: any) => res.statusCode === 200
+  const onlyStatus200 = (req: Request, res: Response) => res.statusCode === 200
 
   app.use(cache('2 minutes', onlyStatus200))
 
   app.use(express.static(path.resolve(__dirname, 'public')))
 
-  app.use(function(req: any, res: any, next: any) {
+  app.use(function(req: Request, res: Response, next: Function) {
     const proxy = req.query.proxy
     if (proxy) {
       req.headers.cookie = req.headers.cookie + `__proxy__${proxy}`
@@ -104,10 +101,10 @@ app.on('activate', () => {
 })
 
 ipcMain.on('close', () => {
-  mainWindow.close()
+  (mainWindow as BrowserWindow).close()
 })
 ipcMain.on('minimize', () => {
-  mainWindow.minimize()
+  (mainWindow as BrowserWindow).minimize()
 })
 
 /**

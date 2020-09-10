@@ -1,14 +1,16 @@
-const express = require('express');
-const apicache = require('apicache');
-const path = require('path');
-const fs = require('fs');
-const app = express();
-let cache = apicache.middleware;
+import { Request, Response } from 'express'
+
+const express = require('express')
+const apicache = require('apicache')
+const path = require('path')
+const fs = require('fs')
+const app = express()
+let cache = apicache.middleware
 
 // 跨域设置
-app.all('*', function(req: any, res: any, next:Function) {
+app.all('*', function(req: Request, res: Response, next: Function) {
   if (req.path !== '/' && !req.path.includes('.')) {
-    res.header('Access-Control-Allow-Credentials', true)
+    res.header('Access-Control-Allow-Credentials', 'true')
     // 这里获取 origin 请求头 而不是用 *
     res.header('Access-Control-Allow-Origin', req.headers['origin'] || '*')
     res.header('Access-Control-Allow-Headers', 'X-Requested-With')
@@ -18,13 +20,13 @@ app.all('*', function(req: any, res: any, next:Function) {
   next()
 })
 
-const onlyStatus200 = (req: any, res: any) => res.statusCode === 200
+const onlyStatus200 = (req: Request, res: Response) => res.statusCode === 200
 
 app.use(cache('2 minutes', onlyStatus200))
 
 app.use(express.static(path.resolve(__dirname, 'public')))
 
-app.use(function(req: any, res: any, next: Function) {
+app.use(function(req: Request, res: Response, next: Function) {
   const proxy = req.query.proxy
   if (proxy) {
     req.headers.cookie = req.headers.cookie + `__proxy__${proxy}`
@@ -42,10 +44,10 @@ const UnusualRouteFileMap = {
 
 // 简化 路由 导出方式, 由这里统一对 router 目录中导出的路由做包装, 路由实际对应的文件只专注做它该做的事情, 不用重复写样板代码
 const { createWebAPIRequest, request } = require('./util/util')
-const Wrap = (fn: Function) => (req: any, res: any) => fn(req, res, createWebAPIRequest, request)
+const Wrap = (fn: Function) => (req: Request, res: Response) => fn(req, res, createWebAPIRequest, request)
 
 // 同步读取 router 目录中的js文件, 根据命名规则, 自动注册路由
-fs.readdirSync('./router/').reverse().forEach((file: any) => {
+fs.readdirSync('./router/').reverse().forEach((file: string) => {
   if (/\.js$/i.test(file) === false) {
     return
   }
