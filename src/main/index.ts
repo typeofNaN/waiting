@@ -76,7 +76,10 @@ function createWindow() {
     skipTaskbar: false,
     transparent: false,
     title: 'waiting',
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   mainWindow.loadURL(winURL)
