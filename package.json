@@ -57,16 +57,16 @@
   },
   "dependencies": {
     "apicache": "^1.5.3",
-    "axios": "^0.18.0",
+    "axios": "^0.19.2",
     "big-integer": "^1.6.48",
     "child_process": "^1.0.2",
     "express": "^4.17.1",
     "request": "^2.88.2",
     "url-parse": "^1.4.7",
-    "vue": "^2.5.16",
+    "vue": "^2.6.11",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
+    "vuex": "^3.4.0",
     "vuex-electron": "^1.0.0"
   },
   "devDependencies": {
