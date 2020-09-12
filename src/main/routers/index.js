@@ -1,5 +1,3 @@
-import { Request, Response } from 'express'
-
 import { createWebAPIRequest, request } from '../util/util'
 
 const crypto = require('crypto')
@@ -7,7 +5,7 @@ const crypto = require('crypto')
 var express = require('express')
 var router = express.Router()
 
-router.get('/album', (req: Request, res: Response, next: Function) => {
+router.get('/album', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -19,14 +17,14 @@ router.get('/album', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
 
-router.get('/artist/album', (req: Request, res: Response, next: Function) => {
+router.get('/artist/album', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const albumId = req.query.id
   const data = {
@@ -41,12 +39,12 @@ router.get('/artist/album', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
 
-router.get('/artist/desc', (req: Request, res: Response, next: Function) => {
+router.get('/artist/desc', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const descId = req.query.id
   const data = {
@@ -59,12 +57,12 @@ router.get('/artist/desc', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
 
-router.get('/artist/list', (req: any, res: Response, next: Function) => {
+router.get('/artist/list', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
 
   // categoryCode 取值
@@ -101,13 +99,13 @@ router.get('/artist/list', (req: any, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/artist/mv', (req: Request, res: Response, next: Function) => {
+router.get('/artist/mv', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const mvId = req.query.id
   const data = {
@@ -123,11 +121,11 @@ router.get('/artist/mv', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/artist/sub', (req: Request, res: Response, next: Function) => {
+router.get('/artist/sub', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     artistId: `${req.query.id}`
@@ -138,13 +136,13 @@ router.get('/artist/sub', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/artist/sublist', (req: Request, res: Response, next: Function) => {
+router.get('/artist/sublist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
 
   const data = {
@@ -158,13 +156,13 @@ router.get('/artist/sublist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/artists', (req: Request, res: Response, next: Function) => {
+router.get('/artists', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const ids = req.query.id
 
@@ -178,14 +176,14 @@ router.get('/artists', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
 
-router.get('/banner', (req: Request, res: Response, next: Function) => {
+router.get('/banner', (req, res, next) => {
   const options = {
     url: 'http://music.163.com/discover',
     method: 'GET',
@@ -194,7 +192,7 @@ router.get('/banner', (req: Request, res: Response, next: Function) => {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3380.0 Safari/537.36'
     }
   }
-  request(options, (error: any, response: any, body: any) => {
+  request(options, (error, response, body) => {
     if (error) {
       res.status(502).send('fetch error')
     } else {
@@ -208,9 +206,9 @@ router.get('/banner', (req: Request, res: Response, next: Function) => {
     }
   })
 })
-router.get('/check/music', (req: Request, res: Response, next: Function) => {
-  const musicId = parseInt(req.query.id as string)
-  const br = parseInt(req.query.br as string) || 999000
+router.get('/check/music', (req, res, next) => {
+  const musicId = parseInt(req.query.id)
+  const br = parseInt(req.query.br) || 999000
   const data = {
     ids: [musicId],
     br: br,
@@ -223,7 +221,7 @@ router.get('/check/music', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       if (JSON.parse(musicReq).code === 200) {
         return res.send({
           success: true,
@@ -240,7 +238,7 @@ router.get('/check/music', (req: Request, res: Response, next: Function) => {
     }
   )
 })
-router.get('/comment/album', (req: Request, res: Response, next: Function) => {
+router.get('/comment/album', (req, res, next) => {
   const rid = req.query.id
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
@@ -255,13 +253,13 @@ router.get('/comment/album', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/comment/dj', (req: Request, res: Response, next: Function) => {
+router.get('/comment/dj', (req, res, next) => {
   const djId = req.query.id
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
@@ -276,13 +274,13 @@ router.get('/comment/dj', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/comment/like', (req: Request, res: Response, next: Function) => {
+router.get('/comment/like', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const likeId = req.query.cid // 评论 id
   const ids = req.query.id // 歌曲 id
@@ -293,13 +291,13 @@ router.get('/comment/like', (req: Request, res: Response, next: Function) => {
     3: 'R_AL_3_', // 专辑
     4: 'A_DJ_1_' // 电台
   }
-  const type = typeMap[req.query.type as string]
+  const type = typeMap[req.query.type]
   const data = {
     threadId: `${type}${ids}`,
     commentId: likeId,
     csrf_token: ''
   }
-  const action = ~~(req.query.t as string) === 1 ? 'like' : 'unlike'
+  const action = ~~(req.query.t) === 1 ? 'like' : 'unlike'
 
   const url = `/weapi/v1/comment/${action}`
   createWebAPIRequest(
@@ -308,11 +306,11 @@ router.get('/comment/like', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/comment/music', (req: Request, res: Response, next: Function) => {
+router.get('/comment/music', (req, res, next) => {
   const musicId = req.query.id
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
@@ -327,13 +325,13 @@ router.get('/comment/music', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
-    (err: any) => res.status(502).send(err.message)
+    err => res.status(502).send(err.message)
   )
 })
-router.get('/comment/mv', (req: Request, res: Response, next: Function) => {
+router.get('/comment/mv', (req, res, next) => {
   const mvId = req.query.id
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
@@ -348,13 +346,13 @@ router.get('/comment/mv', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/comment/playlist', (req: Request, res: Response, next: Function) => {
+router.get('/comment/playlist', (req, res, next) => {
   const rid = req.query.id
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
@@ -369,13 +367,13 @@ router.get('/comment/playlist', (req: Request, res: Response, next: Function) =>
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/daily/signin', (req: Request, res: Response, next: Function) => {
+router.get('/daily/signin', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   let type = req.query.type || 0 // 0为安卓端签到 3点经验,1为网页签到,2点经验
   const data = {
@@ -392,11 +390,11 @@ router.get('/daily/signin', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/catelist', (req: Request, res: Response, next: Function) => {
+router.get('/dj/catelist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -407,13 +405,13 @@ router.get('/dj/catelist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/detail', (req: Request, res: Response, next: Function) => {
+router.get('/dj/detail', (req, res, next) => {
   const djId = req.query.rid
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
@@ -426,13 +424,13 @@ router.get('/dj/detail', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/hot', (req: Request, res: Response, next: Function) => {
+router.get('/dj/hot', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     cat: req.query.type,
@@ -450,13 +448,13 @@ router.get('/dj/hot', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/paygift', (req: Request, res: Response, next: Function) => {
+router.get('/dj/paygift', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: '',
@@ -469,13 +467,13 @@ router.get('/dj/paygift', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/program', (req: Request, res: Response, next: Function) => {
+router.get('/dj/program', (req, res, next) => {
   const djId = req.query.rid
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
@@ -491,13 +489,13 @@ router.get('/dj/program', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/program/detail', (req: Request, res: Response, next: Function) => {
+router.get('/dj/program/detail', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     id: req.query.id,
@@ -509,13 +507,13 @@ router.get('/dj/program/detail', (req: Request, res: Response, next: Function) =
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/recommend', (req: Request, res: Response, next: Function) => {
+router.get('/dj/recommend', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -526,13 +524,13 @@ router.get('/dj/recommend', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/recommend/type', (req: Request, res: Response, next: Function) => {
+router.get('/dj/recommend/type', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     cateId: req.query.type,
@@ -544,32 +542,32 @@ router.get('/dj/recommend/type', (req: Request, res: Response, next: Function) =
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/sub', (req: Request, res: Response, next: Function) => {
+router.get('/dj/sub', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     id: req.query.rid,
     csrf_token: ''
   }
-  const action = ~~(req.query.t as string) === 1 ? 'sub' : 'unsub'
+  const action = ~~(req.query.t) === 1 ? 'sub' : 'unsub'
   createWebAPIRequest(
     'music.163.com',
     `/weapi/djradio/${action}`,
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/dj/sublist', (req: Request, res: Response, next: Function) => {
+router.get('/dj/sublist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
 
   const data = {
@@ -583,13 +581,13 @@ router.get('/dj/sublist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/event', (req: Request, res: Response, next: Function) => {
+router.get('/event', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -600,11 +598,11 @@ router.get('/event', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/fm/trash', (req: Request, res: Response, next: Function) => {
+router.get('/fm/trash', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const songId = req.query.id
   const alg = 'RT'
@@ -620,11 +618,11 @@ router.get('/fm/trash', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/follow', (req: Request, res: Response, next: Function) => {
+router.get('/follow', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -637,13 +635,13 @@ router.get('/follow', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/like', (req: Request, res: Response, next: Function) => {
+router.get('/like', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const trackId = req.query.id
   const like = req.query.like || true
@@ -660,11 +658,11 @@ router.get('/like', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/likelist', (req: Request, res: Response, next: Function) => {
+router.get('/likelist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     uid: req.query.uid,
@@ -676,13 +674,13 @@ router.get('/likelist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/logWeb', (req: Request, res: Response, next: Function) => {
+router.get('/logWeb', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -694,11 +692,11 @@ router.get('/logWeb', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/login', (req: Request, res: Response, next: Function) => {
+router.get('/login', (req, res, next) => {
   const email = req.query.email
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const md5sum = crypto.createHash('md5')
@@ -716,9 +714,9 @@ router.get('/login', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any, cookie: any) => {
+    (musicReq, cookie) => {
       // console.log(musicReq)
-      cookie = cookie && cookie.map((x: any) => x.replace('Domain=.music.163.com', ''))
+      cookie = cookie && cookie.map((x) => x.replace('Domain=.music.163.com', ''))
       res.set({
         'Set-Cookie': cookie
       })
@@ -727,7 +725,7 @@ router.get('/login', (req: Request, res: Response, next: Function) => {
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/login/cellphone', (req: Request, res: Response, next: Function) => {
+router.get('/login/cellphone', (req, res, next) => {
   const phone = req.query.phone
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const md5sum = crypto.createHash('md5')
@@ -743,7 +741,7 @@ router.get('/login/cellphone', (req: Request, res: Response, next: Function) => 
     'POST',
     data,
     cookie,
-    (musicReq: any, cookie: Array<any> = []) => {
+    (musicReq, cookie = []) => {
       const cookieStr =
         'appver=1.5.9os=osx channel=neteaseosver=çæ¬ 10.13.2ï¼çå· 17C88ï¼'
       cookieStr.split('').forEach(item => {
@@ -757,7 +755,7 @@ router.get('/login/cellphone', (req: Request, res: Response, next: Function) => 
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/login/refresh', (req: Request, res: Response, next: Function) => {
+router.get('/login/refresh', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -768,7 +766,7 @@ router.get('/login/refresh', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any, cookie: any) => {
+    (musicReq, cookie) => {
       res.set({
         'Set-Cookie': cookie
       })
@@ -777,7 +775,7 @@ router.get('/login/refresh', (req: Request, res: Response, next: Function) => {
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/lyric', (req: Request, res: Response, next: Function) => {
+router.get('/lyric', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {}
   const ids = req.query.id
@@ -787,13 +785,13 @@ router.get('/lyric', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/music/url', (req: Request, res: Response, next: Function) => {
+router.get('/music/url', (req, res, next) => {
   const ids = req.query.id
   const br = req.query.br || 999000
   const data = {
@@ -809,7 +807,7 @@ router.get('/music/url', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.setHeader('Content-Type', 'application/json')
       res.send(musicReq)
     },
@@ -818,7 +816,7 @@ router.get('/music/url', (req: Request, res: Response, next: Function) => {
     }
   )
 })
-router.get('/mv', (req: Request, res: Response, next: Function) => {
+router.get('/mv', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const mvid = req.query.mvid
   const data = {
@@ -831,13 +829,13 @@ router.get('/mv', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/mv/first', (req: Request, res: Response, next: Function) => {
+router.get('/mv/first', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     // 'offset': req.query.offset || 0,
@@ -851,11 +849,11 @@ router.get('/mv/first', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/mv/url', (req: Request, res: Response, next: Function) => {
+router.get('/mv/url', (req, res, next) => {
   const url = req.query.url
   const headers = {
     Referer: 'http://music.163.com/',
@@ -868,14 +866,14 @@ router.get('/mv/url', (req: Request, res: Response, next: Function) => {
     url: url
   }
   request(options)
-    .on('error', (err: any) => {
+    .on('error', err => {
       res.send({
         err
       })
     })
     .pipe(res)
 })
-router.get('/personal/fm', (req: Request, res: Response, next: Function) => {
+router.get('/personal/fm', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -886,12 +884,12 @@ router.get('/personal/fm', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
 
-router.get('/personalized', (req: Request, res: Response, next: Function) => {
+router.get('/personalized', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     limit: req.query.limit || 30,
@@ -906,13 +904,13 @@ router.get('/personalized', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/personalized/djprogram', (req: Request, res: Response, next: Function) => {
+router.get('/personalized/djprogram', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {}
   createWebAPIRequest(
@@ -921,13 +919,13 @@ router.get('/personalized/djprogram', (req: Request, res: Response, next: Functi
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/personalized/mv', (req: Request, res: Response, next: Function) => {
+router.get('/personalized/mv', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {}
   createWebAPIRequest(
@@ -936,13 +934,13 @@ router.get('/personalized/mv', (req: Request, res: Response, next: Function) => 
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/personalized/newsong', (req: Request, res: Response, next: Function) => {
+router.get('/personalized/newsong', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     type: 'recommend'
@@ -953,13 +951,13 @@ router.get('/personalized/newsong', (req: Request, res: Response, next: Function
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/personalized/privatecontent', (req: Request, res: Response, next: Function) => {
+router.get('/personalized/privatecontent', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {}
   createWebAPIRequest(
@@ -968,13 +966,13 @@ router.get('/personalized/privatecontent', (req: Request, res: Response, next: F
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/playlist/catlist', (req: Request, res: Response, next: Function) => {
+router.get('/playlist/catlist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -985,13 +983,13 @@ router.get('/playlist/catlist', (req: Request, res: Response, next: Function) =>
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/playlist/create', (req: Request, res: Response, next: Function) => {
+router.get('/playlist/create', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     name: req.query.name,
@@ -1003,13 +1001,13 @@ router.get('/playlist/create', (req: Request, res: Response, next: Function) => 
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/playlist/detail', (req: Request, res: Response, next: Function) => {
+router.get('/playlist/detail', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     id: req.query.id,
@@ -1024,7 +1022,7 @@ router.get('/playlist/detail', (req: Request, res: Response, next: Function) => 
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       // console.log(JSON.parse(musicReq).playlist.tracks.length)
       // console.log(JSON.parse(musicReq).playlist.trackIds.length)
       res.send(musicReq)
@@ -1034,7 +1032,7 @@ router.get('/playlist/detail', (req: Request, res: Response, next: Function) => 
     }
   )
 })
-router.get('/playlist/hot', (req: Request, res: Response, next: Function) => {
+router.get('/playlist/hot', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {}
   createWebAPIRequest(
@@ -1043,32 +1041,32 @@ router.get('/playlist/hot', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/playlist/subscribe', (req: Request, res: Response, next: Function) => {
+router.get('/playlist/subscribe', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     id: req.query.id,
     csrf_token: ''
   }
-  const action = ~~(req.query.t as string) === 1 ? 'subscribe' : 'unsubscribe'
+  const action = ~~(req.query.t) === 1 ? 'subscribe' : 'unsubscribe'
   createWebAPIRequest(
     'music.163.com',
     `/weapi/playlist/${action}`,
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/playlist/tracks', (req: Request, res: Response, next: Function) => {
+router.get('/playlist/tracks', (req, res, next) => {
   const op = req.query.op
   const pid = req.query.pid
   // const tracks = req.query.tracks.split(',')
@@ -1090,11 +1088,11 @@ router.get('/playlist/tracks', (req: Request, res: Response, next: Function) => 
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/playlist/update', (req: Request, res: Response, next: Function) => {
+router.get('/playlist/update', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const playlistId = req.query.id
   const descDetail = req.query.desc || ''
@@ -1112,13 +1110,13 @@ router.get('/playlist/update', (req: Request, res: Response, next: Function) => 
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/program/recommend', (req: Request, res: Response, next: Function) => {
+router.get('/program/recommend', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     cateId: req.query.type,
@@ -1130,13 +1128,13 @@ router.get('/program/recommend', (req: Request, res: Response, next: Function) =
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/recommend/dislike', (req: Request, res: Response, next: Function) => {
+router.get('/recommend/dislike', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -1148,11 +1146,11 @@ router.get('/recommend/dislike', (req: Request, res: Response, next: Function) =
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/recommend/resource', (req: Request, res: Response, next: Function) => {
+router.get('/recommend/resource', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -1164,11 +1162,11 @@ router.get('/recommend/resource', (req: Request, res: Response, next: Function) 
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/recommend/songs', (req: Request, res: Response, next: Function) => {
+router.get('/recommend/songs', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     offset: 0,
@@ -1183,11 +1181,11 @@ router.get('/recommend/songs', (req: Request, res: Response, next: Function) => 
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/related/playlist', (req: Request, res: Response, next: Function) => {
+router.get('/related/playlist', (req, res, next) => {
   const options = {
     url: 'http://music.163.com/playlist?id=' + req.query.id,
     method: 'GET',
@@ -1196,13 +1194,13 @@ router.get('/related/playlist', (req: Request, res: Response, next: Function) =>
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3380.0 Safari/537.36'
     }
   }
-  request(options, (error: any, response: any, body: any) => {
+  request(options, (error, response, body) => {
     if (error) {
       res.status(502).send('fetch error')
     } else {
       try {
         const pattern = /<div class='cver u-cover u-cover-3'>[\s\S]*?<img src='([^']+)'>[\s\S]*?<a class='sname f-fs1 s-fc0' href='([^']+)'[^>]*>([^<]+?)<\/a>[\s\S]*?<a class='nm nm f-thide s-fc3' href='([^']+)'[^>]*>([^<]+?)<\/a>/g
-        const data: any = {
+        const data = {
           playlists: [],
           code: 200
         }
@@ -1225,26 +1223,26 @@ router.get('/related/playlist', (req: Request, res: Response, next: Function) =>
     }
   })
 })
-router.get('/resource/like', (req: Request, res: Response, next: Function) => {
+router.get('/resource/like', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     threadId: req.query.id,
     csrf_token: ''
   }
-  const action = ~~(req.query.t as string) === 1 ? 'like' : 'unlike'
+  const action = ~~(req.query.t) === 1 ? 'like' : 'unlike'
   createWebAPIRequest(
     'music.163.com',
     `/weapi/resource/${action}`,
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/search', (req: Request, res: Response, next: Function) => {
+router.get('/search', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const keywords = req.query.keywords
   const type = req.query.type || 1
@@ -1265,11 +1263,11 @@ router.get('/search', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/search/hot', (req: Request, res: Response, next: Function) => {
+router.get('/search/hot', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     type: 1111
@@ -1281,13 +1279,13 @@ router.get('/search/hot', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/search/multimatch', (req: Request, res: Response, next: Function) => {
+router.get('/search/multimatch', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: '',
@@ -1301,13 +1299,13 @@ router.get('/search/multimatch', (req: Request, res: Response, next: Function) =
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/search/suggest', (req: Request, res: Response, next: Function) => {
+router.get('/search/suggest', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: '',
@@ -1320,13 +1318,13 @@ router.get('/search/suggest', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/send/playlist', (req: Request, res: Response, next: Function) => {
+router.get('/send/playlist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const userIds = req.query.user_ids
   const data = {
@@ -1342,11 +1340,11 @@ router.get('/send/playlist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/send/text', (req: Request, res: Response, next: Function) => {
+router.get('/send/text', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   // user_id must be [id]
   const userIds = req.query.user_ids
@@ -1363,11 +1361,11 @@ router.get('/send/text', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/simi/artist', (req: Request, res: Response, next: Function) => {
+router.get('/simi/artist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const artistid = req.query.id
   const data = {
@@ -1380,11 +1378,11 @@ router.get('/simi/artist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/simi/mv', (req: Request, res: Response, next: Function) => {
+router.get('/simi/mv', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     mvid: req.query.mvid
@@ -1395,11 +1393,11 @@ router.get('/simi/mv', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/simi/playlist', (req: Request, res: Response, next: Function) => {
+router.get('/simi/playlist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     songid: req.query.id
@@ -1410,13 +1408,13 @@ router.get('/simi/playlist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/simi/song', (req: Request, res: Response, next: Function) => {
+router.get('/simi/song', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     songid: req.query.id
@@ -1427,13 +1425,13 @@ router.get('/simi/song', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/simi/user', (req: Request, res: Response, next: Function) => {
+router.get('/simi/user', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     songid: req.query.id
@@ -1444,15 +1442,15 @@ router.get('/simi/user', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/song/detail', (req: Request, res: Response, next: Function) => {
+router.get('/song/detail', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
-  const ids = parseInt(req.query.ids as string)
+  const ids = parseInt(req.query.ids)
   const data = {
     // 'id': id,
     c: JSON.stringify([{
@@ -1468,13 +1466,13 @@ router.get('/song/detail', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/top/album', (req: Request, res: Response, next: Function) => {
+router.get('/top/album', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     offset: req.query.offset || 0,
@@ -1489,13 +1487,13 @@ router.get('/top/album', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/top/artists', (req: Request, res: Response, next: Function) => {
+router.get('/top/artists', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     offset: req.query.offset || 0,
@@ -1509,13 +1507,13 @@ router.get('/top/artists', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/top/list', (req: Request, res: Response, next: Function) => {
+router.get('/top/list', (req, res, next) => {
   const topListAll = {
     '0': ['云音乐新歌榜', '3779629'],
     '1': ['云音乐热歌榜', '3778678'],
@@ -1542,7 +1540,7 @@ router.get('/top/list', (req: Request, res: Response, next: Function) => {
     '22': ['云音乐ACG音乐榜', '71385702'],
     '23': ['云音乐嘻哈榜', '991319590']
   }
-  const idx = req.query.idx as string
+  const idx = req.query.idx
   const ids = topListAll[idx][1]
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const action = '/weapi/v3/playlist/detail'
@@ -1557,7 +1555,7 @@ router.get('/top/list', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.setHeader('Content-Type', 'application/json')
       // console.log(JSON.parse(musicReq).playlist.tracks.length)
       // console.log(JSON.parse(musicReq).playlist.trackIds.length)
@@ -1566,7 +1564,7 @@ router.get('/top/list', (req: Request, res: Response, next: Function) => {
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/top/mv', (req: Request, res: Response, next: Function) => {
+router.get('/top/mv', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     offset: req.query.offset || 0,
@@ -1581,14 +1579,14 @@ router.get('/top/mv', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.setHeader('Content-Type', 'application/json')
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/top/playlist', (req: Request, res: Response, next: Function) => {
+router.get('/top/playlist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   // order可为 'hot' 可为 'new'
   const data = {
@@ -1604,13 +1602,13 @@ router.get('/top/playlist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/top/playlist/highquality', (req: Request, res: Response, next: Function) => {
+router.get('/top/playlist/highquality', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     cat: req.query.cat || '全部',
@@ -1624,13 +1622,13 @@ router.get('/top/playlist/highquality', (req: Request, res: Response, next: Func
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/top/song', (req: Request, res: Response, next: Function) => {
+router.get('/top/song', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -1641,13 +1639,13 @@ router.get('/top/song', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/toplist', (req: Request, res: Response, next: Function) => {
+router.get('/toplist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -1658,13 +1656,13 @@ router.get('/toplist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/toplist/artist', (req: Request, res: Response, next: Function) => {
+router.get('/toplist/artist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     type: req.query.type,
@@ -1676,13 +1674,13 @@ router.get('/toplist/artist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/toplist/detail', (req: Request, res: Response, next: Function) => {
+router.get('/toplist/detail', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     id: req.query.id,
@@ -1695,13 +1693,13 @@ router.get('/toplist/detail', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/audio', (req: Request, res: Response, next: Function) => {
+router.get('/user/audio', (req, res, next) => {
   const data = {
     userId: req.query.uid,
     csrf_token: ''
@@ -1715,7 +1713,7 @@ router.get('/user/audio', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.setHeader('Content-Type', 'application/json')
       res.send(musicReq)
     },
@@ -1724,7 +1722,7 @@ router.get('/user/audio', (req: Request, res: Response, next: Function) => {
     }
   )
 })
-router.get('/user/cloud', (req: Request, res: Response, next: Function) => {
+router.get('/user/cloud', (req, res, next) => {
   const data = {
     limit: req.query.limit || 10,
     offset: req.query.offset || 0,
@@ -1737,7 +1735,7 @@ router.get('/user/cloud', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.setHeader('Content-Type', 'application/json')
       res.send(musicReq)
     },
@@ -1746,7 +1744,7 @@ router.get('/user/cloud', (req: Request, res: Response, next: Function) => {
     }
   )
 })
-router.get('/user/cloud/search', (req: Request, res: Response, next: Function) => {
+router.get('/user/cloud/search', (req, res, next) => {
   const data = {
     byids: req.query.id,
     id: req.query.id,
@@ -1759,7 +1757,7 @@ router.get('/user/cloud/search', (req: Request, res: Response, next: Function) =
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.setHeader('Content-Type', 'application/json')
       res.send(musicReq)
     },
@@ -1768,7 +1766,7 @@ router.get('/user/cloud/search', (req: Request, res: Response, next: Function) =
     }
   )
 })
-router.get('/user/detail', (req: Request, res: Response, next: Function) => {
+router.get('/user/detail', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const uid = req.query.uid
   const data = {
@@ -1780,13 +1778,13 @@ router.get('/user/detail', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/dj', (req: Request, res: Response, next: Function) => {
+router.get('/user/dj', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const uid = req.query.uid
   const data = {
@@ -1800,13 +1798,13 @@ router.get('/user/dj', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/event', (req: Request, res: Response, next: Function) => {
+router.get('/user/event', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const uid = req.query.uid
   const data = {
@@ -1820,13 +1818,13 @@ router.get('/user/event', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/followeds', (req: Request, res: Response, next: Function) => {
+router.get('/user/followeds', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     userId: req.query.uid,
@@ -1840,13 +1838,13 @@ router.get('/user/followeds', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/follows', (req: Request, res: Response, next: Function) => {
+router.get('/user/follows', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const uid = req.query.uid
   const data = {
@@ -1860,13 +1858,13 @@ router.get('/user/follows', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/playlist', (req: Request, res: Response, next: Function) => {
+router.get('/user/playlist', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     offset: req.query.offset || 0,
@@ -1880,14 +1878,14 @@ router.get('/user/playlist', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => {
+    musicReq => {
       res.send(musicReq)
       // console.log(JSON.parse(musicReq))
     },
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/record', (req: Request, res: Response, next: Function) => {
+router.get('/user/record', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
 
   // type=1时只返回weekData, type=0时返回allData
@@ -1903,11 +1901,11 @@ router.get('/user/record', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/subcount', (req: Request, res: Response, next: Function) => {
+router.get('/user/subcount', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   const data = {
     csrf_token: ''
@@ -1918,11 +1916,11 @@ router.get('/user/subcount', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })
-router.get('/user/update', (req: Request, res: Response, next: Function) => {
+router.get('/user/update', (req, res, next) => {
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''
   // 暂时不提供更换头像接口
   // gender为0表示保密，1为男性，2为女性
@@ -1945,7 +1943,7 @@ router.get('/user/update', (req: Request, res: Response, next: Function) => {
     'POST',
     data,
     cookie,
-    (musicReq: any) => res.send(musicReq),
+    musicReq => res.send(musicReq),
     () => res.status(502).send('fetch error')
   )
 })

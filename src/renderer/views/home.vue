@@ -9,22 +9,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { VBtn } from 'vuetify/lib'
-
-@Component({
+<script>
+export default {
   name: 'Home',
-  components: {
-    VBtn
-  }
-})
-export default class Home extends Vue {
   created () {
     console.log(this.$route)
-  }
-  login () {
-    this.$router.push('/account/signin')
+  },
+  methods: {
+    login () {
+      this.$router.push('/account/signin')
+    }
   }
 }
 </script>

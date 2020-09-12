@@ -1,11 +1,11 @@
-import {Encrypt} from './crypto'
+import { Encrypt } from './crypto'
 
 const request = require('request')
 const querystring = require('querystring')
 
 request.debug = false
 
-function randomUserAgent() {
+function randomUserAgent () {
   const userAgentList = [
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
     'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
@@ -31,7 +31,7 @@ function randomUserAgent() {
   return userAgentList[num]
 }
 
-function createWebAPIRequest(host: string, path: string, method: string, data: any, cookie: any, callback: Function, errorcallback: Function) {
+function createWebAPIRequest (host, path, method, data, cookie, callback, errorcallback) {
   if (cookie.match(/_csrf=[^(;|$)]+;/g)) {
     data.csrf_token = cookie.match(/_csrf=[^(;|$)]+/g)[0].slice(6)
   } else {
@@ -61,7 +61,7 @@ function createWebAPIRequest(host: string, path: string, method: string, data: a
   }
   console.log(`[request] ${options.method} ${options.url} proxy:${options.proxy}`)
 
-  request(options, function(error: any, res: any, body: any) {
+  request(options, function (error, res, body) {
     if (error) {
       console.error(error)
       errorcallback(error)
@@ -79,9 +79,9 @@ function createWebAPIRequest(host: string, path: string, method: string, data: a
   })
 }
 
-function createRequest(path: string, method: string, data: any) {
+function createRequest (path, method, data) {
   return new Promise((resolve, reject) => {
-    const options: any = {
+    const options = {
       url: `http://music.163.com${path}`,
       method: method,
       headers: {
@@ -96,7 +96,7 @@ function createRequest(path: string, method: string, data: any) {
       options.body = data
     }
 
-    request(options, function(error: any, res: any, body: any) {
+    request(options, function (error, res, body) {
       if (error) {
         reject(error)
       } else {
