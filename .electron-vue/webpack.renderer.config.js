@@ -19,7 +19,7 @@ const { VueLoaderPlugin } = require('vue-loader')
  * that provide pure *.vue files that need compiling
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals
  */
-let whiteListedModules = ['vue', 'vuetify']
+let whiteListedModules = ['vue','vue-property-decorator', 'vuetify']
 
 let rendererConfig = {
   devtool: '#cheap-module-eval-source-map',
@@ -32,13 +32,15 @@ let rendererConfig = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        use: {
-        loader: "ts-loader",
-        options: {
-           appendTsSuffixTo: [/\.vue$/],
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [
+          'babel-loader',
+          {
+            loader: 'ts-loader',
+            options: { appendTsxSuffixTo: [/\.vue$/] }
           }
-        }
+        ]
       },
       {
         test: /\.(js|vue)$/,
@@ -96,7 +98,7 @@ let rendererConfig = {
         use: 'vue-html-loader'
       },
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         use: 'babel-loader',
         exclude: /node_modules/
       },
@@ -113,7 +115,9 @@ let rendererConfig = {
             loaders: {
               sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
               scss: 'vue-style-loader!css-loader!sass-loader',
-              less: 'vue-style-loader!css-loader!less-loader'
+              less: 'vue-style-loader!css-loader!less-loader',
+              ts: 'ts-loader',
+              tsx: 'babel-loader!ts-loader'
             }
           }
         }
@@ -192,7 +196,7 @@ let rendererConfig = {
       '@': path.join(__dirname, '../src/renderer'),
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.ts', '.js', '.vue', '.json', '.css', '.node']
+    extensions: ['.ts', '.js', '.vue', '.json', '.css', '.node', '.tsx']
   },
   target: 'electron-renderer'
 }

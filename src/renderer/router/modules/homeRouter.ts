@@ -7,13 +7,25 @@
 
 import { RouteConfig } from 'vue-router'
 
-// 首页
-const Home = () => import('@/views/home.vue')
+// 布局
+import DefaultLayout from '@/layouts/defaultLayout.vue'
 
+// 首页
+// const Home = () => import('@/views/home.vue')
+const Home = () => import('@/views/home.vue')
 const HomeRoute: RouteConfig = {
-  path: '/',
+  path: '/home',
   name: 'Home',
   component: Home
 }
 
-export default HomeRoute
+const HomeRoutes: RouteConfig = {
+  path: '/',
+  component: DefaultLayout,
+  redirect: '/home',
+  children: [
+    HomeRoute
+  ]
+}
+
+export default HomeRoutes

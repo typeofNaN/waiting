@@ -74,6 +74,8 @@ function createWindow() {
     transparent: false,
     title: 'waiting',
     autoHideMenuBar: true,
+    x: 0,
+    y: 0,
     webPreferences: {
       nodeIntegration: true
     }
