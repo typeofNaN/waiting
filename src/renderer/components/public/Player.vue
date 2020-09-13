@@ -32,21 +32,21 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getCurrentSong'
+      'getPlayerSong'
     ]),
     musicPicUrl () {
       try {
-        return this.getCurrentSong.al.picUrl || ''
+        return this.getPlayerSong.al.picUrl || ''
       } catch (e) {
         return ''
       }
     },
     musicTitle () {
-      return this.getCurrentSong.name
+      return this.getPlayerSong.name
     },
     musicAuthors () {
       const authorArr = []
-      const author = this.getCurrentSong.ar
+      const author = this.getPlayerSong.ar
 
       if (author && author.length > 0) {
         author.forEach(i => {
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     getSong () {
-      this.$store.dispatch('setCurrentSong')
+      this.$store.dispatch('playMusic', 450612833)
     }
   }
 }

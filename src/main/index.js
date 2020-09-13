@@ -67,7 +67,7 @@ function createWindow () {
     height: 520,
     useContentSize: true,
     width: 800,
-    frame: true,
+    frame: false,
     resizable: false,
     skipTaskbar: false,
     transparent: false,

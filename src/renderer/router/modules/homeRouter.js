@@ -9,12 +9,20 @@
 import DefaultLayout from '@/layouts/defaultLayout.vue'
 
 // 首页
-// const Home = () => import('@/views/home.vue')
 const Home = () => import('@/views/home.vue')
+// 搜索
+const Search = () => import('@/views/search/search.vue')
+
 const HomeRoute = {
   path: '/home',
   name: 'Home',
   component: Home
+}
+
+const SearchRoute = {
+  path: '/search',
+  name: 'Search',
+  component: Search
 }
 
 const HomeRoutes = {
@@ -22,7 +30,8 @@ const HomeRoutes = {
   component: DefaultLayout,
   redirect: '/home',
   children: [
-    HomeRoute
+    HomeRoute,
+    SearchRoute
   ]
 }
 

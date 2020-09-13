@@ -1,3 +1,9 @@
+/**
+ * @description 状态管理入口
+ * @author typeofNaN
+ * @time 2020-09-12
+ */
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 

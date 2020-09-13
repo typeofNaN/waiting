@@ -3,6 +3,7 @@
     <v-app>
       <img :src="musicPicUrl" alt="" class="main_bg">
       <div class="account_main">
+        <app-main :show="false"></app-main>
         <div class="account_to_home">
           <span @click="toHome">
             <v-icon class="to_home_icon">mdi-arrow-left</v-icon>
@@ -23,15 +24,20 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import AppMain from '@/components/public/AppMain.vue'
+
 export default {
   name: 'AccountLayout',
+  components: {
+    AppMain
+  },
   computed: {
     ...mapGetters([
-      'getCurrentSong'
+      'getPlayerSong'
     ]),
     musicPicUrl () {
       try {
-        return this.getCurrentSong.al.picUrl || ''
+        return this.getPlayerSong.al.picUrl || ''
       } catch (e) {
         return ''
       }
@@ -70,7 +76,7 @@ export default {
     z-index: 2;
 
     .account_to_home {
-      padding: 4px 10px;
+      padding: 30px 10px 0 10px;
       width: 100%;
       text-align: right;
       font-size: 13px;
