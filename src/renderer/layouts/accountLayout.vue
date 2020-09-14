@@ -14,7 +14,7 @@
           <router-view></router-view>
         </div>
         <div class="copyright">
-          &copy; typeofNaN, {{ getCurrentYear }}. 由 Electron 和 日月星辰 强力驱动 | 吾之臂躯 行针步线
+          &copy; typeofNaN, {{ new Date().getFullYear() }}. 由 Electron 和 日月星辰 强力驱动 | 吾之臂躯 行针步线
         </div>
       </div>
     </v-app>
@@ -41,10 +41,6 @@ export default {
       } catch (e) {
         return ''
       }
-    },
-    getCurrentYear () {
-      const now = new Date()
-      return now.getFullYear()
     }
   },
   methods: {

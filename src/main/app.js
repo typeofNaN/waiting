@@ -6,7 +6,7 @@ const app = express()
 let cache = apicache.middleware
 
 // 跨域设置
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res, next) {
   if (req.path !== '/' && !req.path.includes('.')) {
     res.header('Access-Control-Allow-Credentials', 'true')
     // 这里获取 origin 请求头 而不是用 *
@@ -24,7 +24,7 @@ app.use(cache('2 minutes', onlyStatus200))
 
 app.use(express.static(path.resolve(__dirname, 'public')))
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   const proxy = req.query.proxy
   if (proxy) {
     req.headers.cookie = req.headers.cookie + `__proxy__${proxy}`

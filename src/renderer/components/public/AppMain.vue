@@ -28,7 +28,10 @@
       v-if="show"
       class="infos"
     >
-      <div class="music">
+      <div
+        class="music"
+        @click="toHome"
+      >
         <v-icon class="info_icon">mdi-music</v-icon>
       </div>
       <div
@@ -60,6 +63,11 @@ export default {
     prev () {
       if (this.$route.name !== 'Home') {
         this.$router.go(-1)
+      }
+    },
+    toHome () {
+      if (this.$route.name !== 'Home') {
+        this.$router.push('/')
       }
     },
     showDrawer () {

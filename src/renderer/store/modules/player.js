@@ -3,24 +3,24 @@ import playListApi from '@/services/modules/playList'
 import songApi from '@/services/modules/song'
 
 const state = {
-  list: [],
-  song: {},
-  music_urls: [],
-  is_play: false,
-  currentTime: 0
+  playerList: [],
+  playerSong: {},
+  playerMusicUrls: [],
+  playerIsPlay: false,
+  playerCurrentTime: 0
 }
 
 const getters = {
-  getPlayerList: state => state.list,
-  getPlayerSong: state => state.song,
-  getPlayerMusicUrls: state => state.music_urls,
-  getPlayerIsPlay: state => state.is_play,
-  getPlayerCurrentTime: state => state.currentTime
+  getPlayerList: state => state.playerList,
+  getPlayerSong: state => state.playerSong,
+  getPlayerMusicUrls: state => state.playerMusicUrls,
+  getPlayerIsPlay: state => state.playerIsPlay,
+  getPlayerCurrentTime: state => state.playerCurrentTime
 }
 
 const mutations = {
   SET_PLAYER_LIST (state, data) {
-    state.list = data
+    state.playerList = data
   },
   SET_PLAYER_DATA (state, data) {
     Object.keys(data).forEach(function (key) {
@@ -37,18 +37,18 @@ const actions = {
    */
   async playMusic ({ commit }, id) {
     commit('SET_PLAYER_DATA', {
-      is_play: false,
-      currentTime: 0
+      playerIsPlay: false,
+      playerCurrentTime: 0
     })
     const songRes = await songApi.getSongDetailById(id)
     commit('SET_PLAYER_DATA', {
-      song: songRes.songs[0]
+      playerSong: songRes.songs[0]
     })
 
     const musicRes = await musicApi.getMusicUrl(id)
     commit('SET_PLAYER_DATA', {
-      music_urls: musicRes.data,
-      is_play: true
+      playerMusicUrls: musicRes.data,
+      playerIsPlay: true
     })
   },
   /**
@@ -56,7 +56,7 @@ const actions = {
    * @author typeofNaN
    * @time 2020-09-13
    */
-  async playPlaylist ({ commit, dispatch }, id) {
+  async playerlist ({ commit, dispatch }, id) {
     const playListRes = await playListApi.getPlaylistDetail(id)
     commit('SET_PLAYER_LIST', playListRes.playlist.tracks)
     dispatch('playMusic', playListRes.playlist.tracks[0].id)
