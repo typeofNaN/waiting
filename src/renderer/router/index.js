@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HomeRouter from './modules/homeRouter'
-import AccountRouter from './modules/accountRouter'
+import { HomeRoute, SearchRoute } from './modules/homeRouter'
+import { SigninRoute } from './modules/accountRouter'
 
 Vue.use(Router)
 
 const routes = [
-  HomeRouter,
-  AccountRouter,
+  HomeRoute,
+  SearchRoute,
+  SigninRoute,
   {
     path: '*',
     redirect: '/'

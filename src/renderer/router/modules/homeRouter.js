@@ -5,16 +5,13 @@
  * 使用 () => import() 异步加载路由，减少首屏渲染时间
  */
 
-// 布局
-import DefaultLayout from '@/layouts/defaultLayout.vue'
-
 // 首页
 const Home = () => import('@/views/home.vue')
 // 搜索
 const Search = () => import('@/views/search/search.vue')
 
 const HomeRoute = {
-  path: '/home',
+  path: '/',
   name: 'Home',
   component: Home
 }
@@ -25,14 +22,7 @@ const SearchRoute = {
   component: Search
 }
 
-const HomeRoutes = {
-  path: '/',
-  component: DefaultLayout,
-  redirect: '/home',
-  children: [
-    HomeRoute,
-    SearchRoute
-  ]
+export {
+  HomeRoute,
+  SearchRoute
 }
-
-export default HomeRoutes

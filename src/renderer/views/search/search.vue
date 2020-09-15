@@ -54,7 +54,7 @@ export default {
   name: 'Search',
   data () {
     return {
-      searchText: '周杰伦',
+      searchText: '',
       currentTab: 1,
       searchTabList: searchTabList,
       albumList: [],

@@ -5,9 +5,6 @@
  * 使用 () => import() 异步加载路由，减少首屏渲染时间
  */
 
-// 布局
-import AccountLayout from '@/layouts/accountLayout.vue'
-
 // 首页
 const Signin = () => import('@/views/user/signin.vue')
 
@@ -17,13 +14,6 @@ const SigninRoute = {
   component: Signin
 }
 
-const AccountRoutes = {
-  path: '/account',
-  component: AccountLayout,
-  redirect: '/account/signin',
-  children: [
-    SigninRoute
-  ]
+export {
+  SigninRoute
 }
-
-export default AccountRoutes

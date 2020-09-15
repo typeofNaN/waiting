@@ -20,12 +20,9 @@
         <v-icon class="app_main_icon">mdi-arrow-left</v-icon>
       </div>
     </div>
+    <div class="drag"></div>
     <div
-      v-if="show"
-      class="drag"
-    ></div>
-    <div
-      v-if="show"
+      v-if="showInHeader"
       class="infos"
     >
       <div
@@ -51,6 +48,11 @@ export default {
     show: {
       default: true,
       type: Boolean
+    }
+  },
+  computed: {
+    showInHeader () {
+      return this.$route.path !== '/account/signin'
     }
   },
   methods: {

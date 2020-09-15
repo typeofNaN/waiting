@@ -1,5 +1,8 @@
 <template>
-  <div id="player">
+  <div
+    v-show="showInFooter"
+    id="player"
+  >
     <div class="time_slider">
       <v-slider
         v-model="play_time"
@@ -43,7 +46,7 @@
         v-show="play_type === 2"
         class="player_icon"
         @click="changePlayType(0)"
-      >mdi-shuffle-variant</v-icon>
+      >mdi-shuffle</v-icon>
       <v-icon
         class="player_icon"
         @click="playBefore"
@@ -127,7 +130,7 @@ export default {
       play_time: 0,
       max_time: 0,
       interval: null,
-      play_type: 0, // 播放次序 0单曲循环 1列表循环 2随机播放
+      play_type: 1, // 播放次序 0单曲循环 1列表循环 2随机播放
       volume: 100
     }
   },
@@ -157,8 +160,8 @@ export default {
     }
   },
   created () {
-    this.getSong()
-    // this.getPlayList()
+    // this.getSong()
+    this.getPlayList()
   },
   computed: {
     ...mapGetters([
@@ -218,6 +221,9 @@ export default {
         }
       })
       return sIndex >= 0 ? this.getPlayerList[sIndex] : false
+    },
+    showInFooter () {
+      return this.$route.path !== '/account/signin'
     }
   },
   methods: {
@@ -226,7 +232,7 @@ export default {
       this.$store.dispatch('playMusic', 65538)
     },
     getPlayList () {
-      this.$store.dispatch('playerlist', {id: 5055228769})
+      this.$store.dispatch('playerlist', {id: 924680166})
     },
     // 改变播放模式
     changePlayType (val) {
