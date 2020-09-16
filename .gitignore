@@ -3,3 +3,7 @@ node_modules
 dist
 
 yarn.lock
+
+build/mac
+
+build/*.yaml
