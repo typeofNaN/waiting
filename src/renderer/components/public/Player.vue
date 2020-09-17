@@ -30,7 +30,7 @@
     </div>
     <div class="player_right">
       <span>歌词</span>
-      <span>155672 条评论</span>
+      <span>评论</span>
       <v-icon class="player_icon">mdi-heart-outline</v-icon>
       <v-icon
         v-show="play_type === 0"
@@ -161,7 +161,7 @@ export default {
   },
   created () {
     // this.getSong()
-    this.getPlayList()
+    // this.getPlayList()
   },
   computed: {
     ...mapGetters([
@@ -232,7 +232,7 @@ export default {
       this.$store.dispatch('playMusic', 65538)
     },
     getPlayList () {
-      this.$store.dispatch('playerlist', {id: 924680166})
+      this.$store.dispatch('playplayerlist', {id: 924680166})
     },
     // 改变播放模式
     changePlayType (val) {
@@ -360,6 +360,7 @@ export default {
       font-size: 11px;
       border-top: 1px solid #303133;
       border-bottom: 1px solid #303133;
+      cursor: pointer;
     }
 
     .player_icon {

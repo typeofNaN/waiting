@@ -29,6 +29,7 @@
             v-for="(playItem, playIndex) in recommendPlayList"
             :key="playIndex"
             class="recommend_play_item"
+            @click="toPlayItemDeatil(playItem)"
           >
             <img :src="playItem.picUrl" alt="" class="big_img">
             <div class="recommend_play_info">
@@ -40,8 +41,12 @@
                 <p class="recommend_play_count">{{ playItem.playCount }} 次 播放</p>
               </div>
             </div>
-            <div class="goto_icon">
-              <v-icon class="to_go_icon">mdi-arrow-right</v-icon>
+            <div
+              class="goto_icon"
+              @click="playCurrentList(playItem)"
+              onclick="event.cancelBubble = true"
+            >
+              <v-icon class="to_go_icon">mdi-play</v-icon>
             </div>
           </div>
         </div>
@@ -73,6 +78,12 @@ export default {
     },
     search () {
       this.$router.push('/search')
+    },
+    toPlayItemDeatil (playItem) {
+      console.log(playItem)
+    },
+    playCurrentList (playItem) {
+      this.$store.dispatch('playplayerlist', {id: playItem.id})
     }
   }
 }

@@ -56,7 +56,7 @@ const actions = {
    * @author typeofNaN
    * @time 2020-09-13
    */
-  async playerlist ({ commit, dispatch }, id) {
+  async playplayerlist ({ commit, dispatch }, id) {
     const playListRes = await playListApi.getPlaylistDetail(id)
     commit('SET_PLAYER_LIST', playListRes.playlist.tracks)
     dispatch('playMusic', playListRes.playlist.tracks[0].id)
