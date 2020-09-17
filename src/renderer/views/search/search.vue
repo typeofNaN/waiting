@@ -25,6 +25,7 @@
             v-for="(albumItem, albumIndex) in albumList"
             :key="albumIndex"
             class="album_item"
+            @click="playList(albumItem)"
           >
             <v-list-item-avatar class="album_img">
               <v-img :src="albumItem.picUrl"></v-img>
@@ -54,7 +55,7 @@ export default {
   name: 'Search',
   data () {
     return {
-      searchText: '',
+      searchText: '陈奕迅',
       currentTab: 1,
       searchTabList: searchTabList,
       albumList: [],
@@ -89,6 +90,9 @@ export default {
     changeTab (val) {
       this.currentTab = val
       this.search()
+    },
+    playList (albumItem) {
+      this.$store.dispatch('playAlbumList', {id: albumItem.id})
     }
   }
 }
@@ -98,7 +102,7 @@ export default {
 #search {
   padding: 40px 40px 0 40px;
   height: 470px;
-  background-color: rgba(255, 255, 255, .5);
+  background-color: rgba(255, 255, 255, .7);
   overflow-y: auto;
 }
 </style>

@@ -83,7 +83,7 @@ export default {
       console.log(playItem)
     },
     playCurrentList (playItem) {
-      this.$store.dispatch('playplayerlist', {id: playItem.id})
+      this.$store.dispatch('playPlayerList', {id: playItem.id})
     }
   }
 }

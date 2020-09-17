@@ -157,6 +157,11 @@ export default {
     },
     getPlayerCurrentTime (val) {
       this.play_time = val
+    },
+    play_url (url) {
+      if (!url) {
+        this.playAfter()
+      }
     }
   },
   created () {
@@ -232,7 +237,7 @@ export default {
       this.$store.dispatch('playMusic', 65538)
     },
     getPlayList () {
-      this.$store.dispatch('playplayerlist', {id: 924680166})
+      this.$store.dispatch('playPlayerList', {id: 924680166})
     },
     // 改变播放模式
     changePlayType (val) {

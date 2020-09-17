@@ -1,3 +1,4 @@
+import albumApi from '@/services/modules/album'
 import musicApi from '@/services/modules/music'
 import playListApi from '@/services/modules/playList'
 import songApi from '@/services/modules/song'
@@ -52,14 +53,24 @@ const actions = {
     })
   },
   /**
-   * @description 获取播放音乐列表
+   * @description 获取歌单音乐列表播放
    * @author typeofNaN
    * @time 2020-09-13
    */
-  async playplayerlist ({ commit, dispatch }, id) {
+  async playPlayerList ({ commit, dispatch }, id) {
     const playListRes = await playListApi.getPlaylistDetail(id)
     commit('SET_PLAYER_LIST', playListRes.playlist.tracks)
     dispatch('playMusic', playListRes.playlist.tracks[0].id)
+  },
+  /**
+   * @description 获取专辑音乐列表播放
+   * @author typeofNaN
+   * @time 2020-09-13
+   */
+  async playAlbumList ({ commit, dispatch }, id) {
+    const albumRes = await albumApi.getAlbumDetail(id)
+    commit('SET_PLAYER_LIST', albumRes.songs)
+    dispatch('playMusic', albumRes.songs[0].id)
   }
 }
 
