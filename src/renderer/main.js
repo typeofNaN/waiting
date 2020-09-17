@@ -7,6 +7,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import * as filters from '@/filters'
 import './assets/style/style.scss'
+import './utils/heartAnimate'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
