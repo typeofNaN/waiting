@@ -9,6 +9,10 @@
 const Home = () => import('@/views/home.vue')
 // 搜索
 const Search = () => import('@/views/search/search.vue')
+// 歌单详情
+const Playlist = () => import('@/views/playlist/playlist.vue')
+// 专辑详情
+const Album = () => import('@/views/playlist/playlist.vue')
 
 const HomeRoute = {
   path: '/',
@@ -22,7 +26,21 @@ const SearchRoute = {
   component: Search
 }
 
+const PlaylistRoute = {
+  path: '/playlist/:id',
+  name: 'Playlist',
+  component: Playlist
+}
+
+const AlbumRoute = {
+  path: '/album/:id',
+  name: 'Album',
+  component: Album
+}
+
 export {
   HomeRoute,
-  SearchRoute
+  SearchRoute,
+  PlaylistRoute,
+  AlbumRoute
 }

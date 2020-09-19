@@ -31,7 +31,6 @@
     <div class="player_right">
       <span>歌词</span>
       <span>评论</span>
-      <v-icon class="player_icon">mdi-heart-outline</v-icon>
       <v-icon
         v-show="play_type === 0"
         class="player_icon"
@@ -345,8 +344,13 @@ export default {
       line-height: 1.5;
 
       .music_title {
+        width: 300px;
         margin-bottom: 2px;
         font-size: 14px;
+        overflow: hidden;
+        overflow: hidden;    
+        text-overflow:ellipsis;    
+        white-space: nowrap;
       }
 
       .music_author {

@@ -283,6 +283,42 @@ class Tools {
       return (byteSize / (1 << 30)).toFixed(2) + ' T'
     }
   }
+
+  /**
+   * @desxription 随机生成颜色
+   * @author typeofNaN
+   * @time 2020-09-19
+   * @returns 随机生成的颜色
+   */
+  randomColor () {
+    const r = Math.floor(Math.random() * 256)
+    const g = Math.floor(Math.random() * 256)
+    const b = Math.floor(Math.random() * 256)
+    const color = '#' + r.toString(16) + g.toString(16) + b.toString(16)
+    return color
+  }
+
+  /**
+   * @desxription 将毫秒格式化成时间
+   * @author typeofNaN
+   * @time 2020-09-19
+   * @param { t } 时间戳
+   * @returns 格式化后的时间
+   */
+  formatDuring (t) {
+    const HOUR = 1000 * 60 * 60
+    const d = ~~(t / (HOUR * 24))
+    const h = ~~((t % (HOUR * 24)) / (HOUR))
+    const m = ~~((t % (HOUR)) / (1000 * 60))
+    const s = ~~((t % (1000 * 60)) / 1000)
+
+    let text = ''
+    d && (text += `${d}天`)
+    h && (text += `${this.addZero(h)}:`)
+    m ? (text += `${this.addZero(m)}:`) : (text += '00')
+    s ? (text += `${this.addZero(s)}`) : (text += '00')
+    return text || '-'
+  }
 }
 
 export default new Tools()

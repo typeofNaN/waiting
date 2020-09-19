@@ -15,3 +15,12 @@ import Tools from '@/utils/tools'
  * @returns 返回格式化后的时间
  */
 export const parseTime = timeNum => Tools.parseTime(timeNum, '{y}/{m}/{d}')
+
+/**
+ * @desxription 将毫秒格式化成时间
+ * @author typeofNaN
+ * @time 2020-09-19
+ * @param { t } 时间戳
+ * @returns 格式化后的时间
+ */
+export const formatDuring = timeNum => Tools.formatDuring(timeNum)

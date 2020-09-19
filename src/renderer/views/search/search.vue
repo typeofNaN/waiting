@@ -18,14 +18,37 @@
       >{{ tab.text }}</v-tab>
     </v-tabs>
     <v-divider></v-divider>
-    <v-container class="data_list">
-      <v-list class="album_list">
+    <v-container
+      ref="data_list"
+      class="data_list"
+    >
+      <v-list
+        v-if="currentTab === 0"
+        class="single_list"
+      >
+        <v-list-item-group color="primary">
+          <v-list-item
+            v-for="(singleItem, singleIndex) in singleList"
+            :key="singleIndex"
+            class="single_item"
+          >
+            <v-list-item-content class="single_content">
+              <v-list-item-title class="single_name">{{ singleItem.name }}</v-list-item-title>
+              <v-list-item-title class="single_author">{{ singleItem.author }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+      <v-list
+        v-else-if="currentTab === 1"
+        class="album_list"
+      >
         <v-list-item-group color="primary">
           <v-list-item
             v-for="(albumItem, albumIndex) in albumList"
             :key="albumIndex"
             class="album_item"
-            @click="playList(albumItem)"
+            @click="playAlbum(albumItem)"
           >
             <v-list-item-avatar class="album_img">
               <v-img :src="albumItem.picUrl"></v-img>
@@ -37,18 +60,101 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
-        <v-list-item class="more">
-          <v-btn text>
-            更多
-            <v-icon>mdi-dots-horizontal</v-icon>
-          </v-btn>
-        </v-list-item>
       </v-list>
+      <v-list
+        v-else-if="currentTab === 2"
+        class="singer_list"
+      >
+        <v-list-item-group color="primary">
+          <v-list-item
+            v-for="(singerItem, singerIndex) in singerList"
+            :key="singerIndex"
+            class="singer_item"
+            @click="singer(singerItem)"
+          >
+            <v-list-item-avatar class="singer_img">
+              <v-img :src="singerItem.picUrl || singerItem.img1v1Url"></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content class="singer_content">
+              <v-list-item-title class="singer_name">{{ singerItem.name }}</v-list-item-title>
+              <v-list-item-title class="album_num">{{ singerItem.albumSize }} 个专辑</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+      <v-list
+        v-else-if="currentTab === 3"
+        class="play_list"
+      >
+        <v-list-item-group color="primary">
+          <v-list-item
+            v-for="(playItem, playIndex) in playList"
+            :key="playIndex"
+            class="play_item"
+            @click="playPlaylist(playItem)"
+          >
+            <v-list-item-avatar class="play_img">
+              <v-img :src="playItem.coverImgUrl"></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content class="play_content">
+              <v-list-item-title class="play_name">{{ playItem.name }}</v-list-item-title>
+              <v-list-item-title class="play_book_count">
+                {{ playItem.bookCount }}
+                <v-icon class="star_icon">mdi-star</v-icon>
+              </v-list-item-title>
+              <v-list-item-title class="play_count">{{ playItem.playCount }} 次播放</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+      <v-container
+        v-else-if="currentTab === 4"
+        class="user_list"
+      >
+        <v-row>
+          <v-col
+            v-for="(userItem, userIndex) in userList"
+            :key="userIndex"
+            :cols="2"
+            class="user_item"
+          >
+            <div class="user_img">
+              <v-img
+                :src="userItem.avatarUrl"
+                class="user_avatar"
+              ></v-img>
+              <v-icon
+                v-if="userItem.gender === 1"
+                class="sex sex_male"
+              >mdi-gender-male</v-icon>
+              <v-icon
+                v-else-if="userItem.gender === 2"
+                class="sex sex_female"
+              >mdi-gender-female</v-icon>
+            </div>
+            <p class="user_name">{{ userItem.nickname }}</p>
+          </v-col>
+        </v-row>
+      </v-container>
+      <div
+        v-show="pageCount !== 1 && !getLoading"
+        class="more"
+      >
+        <v-pagination
+          v-model="pageNum"
+          :length="pageCount"
+          :total-visible="7"
+          circle
+          @input="pageNumChange"
+        ></v-pagination>
+      </div>
     </v-container>
   </v-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import { searchTabList } from '@/config/searchTabData'
 
 export default {
@@ -56,12 +162,19 @@ export default {
   data () {
     return {
       searchText: '陈奕迅',
-      currentTab: 1,
+      currentTab: 0,
       searchTabList: searchTabList,
+      pageNum: 1,
+      pageCount: 1,
+      singleList: [],
       albumList: [],
-
-      albumPageNum: 1
+      singerList: [],
+      playList: [],
+      userList: []
     }
+  },
+  computed: {
+    ...mapGetters(['getLoading'])
   },
   created () {
     this.search()
@@ -71,10 +184,9 @@ export default {
       if (this.searchText.trim().length === 0) {
         return
       }
-      let offset = 1
-      if (this.currentTab === 1) {
-        offset = this.albumPageNum
-      }
+      this.$store.commit('SET_LOADING', true)
+      let offset = this.pageNum
+
       const postData = {
         keywords: this.searchText,
         type: this.searchTabList[this.currentTab].type,
@@ -82,70 +194,63 @@ export default {
       }
       const res = await this.$api.searchApi.search(postData)
       if (res.code === 200) {
-        if (this.currentTab === 1) {
+        if (this.currentTab === 0) {
+          let dt = res.result.songs
+          dt = dt.map(i => {
+            const arr = []
+            i.artists.forEach(j => {
+              arr.push(j.name)
+            })
+            i.author = arr.join('/')
+            return i
+          })
+          this.singleList = dt
+          this.pageCount = this.countSize(res.result.songCount)
+        } else if (this.currentTab === 1) {
           this.albumList = res.result.albums
+          this.pageCount = this.countSize(res.result.albumCount)
+        } else if (this.currentTab === 2) {
+          this.singerList = res.result.artists
+          this.pageCount = this.countSize(res.result.artistCount)
+        } else if (this.currentTab === 3) {
+          this.playList = res.result.playlists
+          this.pageCount = this.countSize(res.result.playlistCount)
+        } else if (this.currentTab === 4) {
+          this.userList = res.result.userprofiles
+          this.pageCount = this.countSize(res.result.userprofileCount)
         }
+
+        this.$refs.data_list.scrollTop = 0
+        this.$store.commit('SET_LOADING', false)
       }
     },
     changeTab (val) {
       this.currentTab = val
+      this.pageNum = 1
       this.search()
     },
-    playList (albumItem) {
-      this.$store.dispatch('playAlbumList', {id: albumItem.id})
+    playAlbum (albumItem) {
+      // this.$store.dispatch('playAlbumList', {id: albumItem.id})
+      this.$router.push(`/album/${albumItem.id}`)
+    },
+    playPlaylist (playItem) {
+      // this.$store.dispatch('playPlayerList', {id: playItem.id})
+      this.$router.push(`/playlist/${playItem.id}`)
+    },
+    pageNumChange () {
+      this.search()
+    },
+    countSize (num) {
+      if (num % 30 === 0) {
+        return (~~(num / 30))
+      } else {
+        return (~~(num / 30) + 1)
+      }
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-#search {
-  padding: 40px 40px 0 40px;
-  height: 470px;
-  background-color: rgba(255, 255, 255, .7);
-  overflow-y: auto;
-}
-</style>
-
 <style lang="scss">
-#search {
-  .search_tabs {
-    .v-tabs-bar {
-      background-color: rgba(0, 0, 0, 0);
-    }
-  }
-
-  .data_list {
-    height: 310px;
-    overflow-x: auto;
-
-    .more {
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .album_list {
-      background-color: rgba(255, 255, 255, 0);
-      .album_item {
-        .album_content {
-          display: flex;
-
-          .v-list-item__title {
-            &.album_name {
-              flex: 1 1 360px;
-            }
-
-            &.album_author {
-              flex: 1 1 130px;
-            }
-
-            &.publish_time {
-              flex: 1 1 100px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
+@import './search.scss';
 </style>

@@ -1,4 +1,11 @@
+/**
+ * @description 状态管理，处理用户认证
+ * @author typeofNaN
+ * @time 2020-09-17
+ */
+
 import local from '@/utils/local'
+import loginApi from '@/services/modules/login'
 
 const state = {
   isLogin: local.get('profile'),
@@ -29,18 +36,50 @@ const mutations = {
 }
 
 const actions = {
-  login ({ commit }, res) {
-    let data = {
-      isLogin: true,
-      account: res.account,
-      bindings: res.bindings,
-      profile: res.profile
+  /**
+   * @description 用户登录
+   * @author typeofNaN
+   * @time 2020-09-17
+   */
+  async login ({ commit }, payload) {
+    const { account, password } = payload.signInData
+
+    let postData = {}
+    let res = {}
+
+    if (account.indexOf('@') >= 0) {
+      postData = {
+        email: account,
+        password
+      }
+
+      res = await loginApi.loginByEmail(postData)
+    } else {
+      postData = {
+        phone: account,
+        password
+      }
+
+      res = await loginApi.loginByTel(postData)
     }
 
-    local.set('account', res.account)
-    local.set('bindings', res.bindings)
-    local.set('profile', res.profile)
-    commit('SET_USER_DATA', data)
+    console.log(res)
+
+    if (res.code === 200) {
+      console.log(res)
+    }
+
+    // let data = {
+    //   isLogin: true,
+    //   account: res.account,
+    //   bindings: res.bindings,
+    //   profile: res.profile
+    // }
+
+    // local.set('account', res.account)
+    // local.set('bindings', res.bindings)
+    // local.set('profile', res.profile)
+    // commit('SET_USER_DATA', data)
   }
 }
 

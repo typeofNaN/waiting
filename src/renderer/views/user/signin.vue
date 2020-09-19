@@ -29,6 +29,7 @@
           block
           color="primary"
           class="signin_btn"
+          @click="signIn"
         >登 录</v-btn>
       </v-form>
     </div>
@@ -39,6 +40,9 @@
 </template>
 
 <script>
+// account: 'vipfenwyy@163.com'
+// password: 'music666'
+
 export default {
   name: 'Signin',
   data () {
@@ -53,71 +57,16 @@ export default {
   methods: {
     toHome () {
       this.$router.push('/')
+    },
+    signIn () {
+      // this.$store.dispatch('login', {
+      //   signInData: this.signinForm
+      // })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-#signin {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(255, 255, 255, .85);
-  z-index: 2;
-
-  .account_to_home {
-    padding: 30px 10px 0 10px;
-    width: 100%;
-    text-align: right;
-    font-size: 13px;
-    color: #606266;
-
-    span {
-      vertical-align: middle;
-      cursor: pointer;
-
-      .to_home_icon {
-        font-size: 18px;
-      }
-    }
-  }
-
-  .sign_box {
-    width: 360px;
-    height: 400px;
-
-    .signin_title {
-      margin-bottom: 40px;
-      text-align: center;
-      font-family: 'HelveticaNeue-UltraLight';
-      font-weight: 400;
-      font-size: 44px;
-      letter-spacing: 2px;
-      word-spacing: 6px;
-      color: #ea4c89;
-    }
-
-    p {
-      margin-bottom: 30px;
-      text-align: center;
-      color: #909399;
-      font-size: 14px;
-    }
-
-    .signin_btn {
-      margin-top: 20px;
-    }
-  }
-
-  .copyright {
-    padding: 4px 10px;
-    text-align: center;
-    color: #909399;
-    font-size: 12px;
-  }
-}
+@import './signin.scss';
 </style>

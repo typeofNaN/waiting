@@ -39,6 +39,7 @@
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
+      <loading v-show="getLoading"></loading>
     </v-app>
   </div>
 </template>
@@ -48,6 +49,7 @@ import { mapGetters } from 'vuex'
 
 import AppMain from '@/components/public/AppMain.vue'
 import Player from '@/components/public/Player.vue'
+import Loading from '@/components/public/Loading.vue'
 import { drawerList } from '@/config/leftDrawer'
 
 export default {
@@ -60,11 +62,13 @@ export default {
   },
   components: {
     AppMain,
-    Player
+    Player,
+    Loading
   },
   computed: {
     ...mapGetters([
-      'getPlayerSong'
+      'getPlayerSong',
+      'getLoading'
     ]),
     musicPicUrl () {
       try {

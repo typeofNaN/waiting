@@ -1,3 +1,9 @@
+/**
+ * @description 状态管理，处理音乐播放
+ * @author typeofNaN
+ * @time 2020-09-13
+ */
+
 import albumApi from '@/services/modules/album'
 import musicApi from '@/services/modules/music'
 import playListApi from '@/services/modules/playList'
