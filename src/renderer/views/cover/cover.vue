@@ -35,7 +35,7 @@ export default {
     width: 260px;
     height: 260px;
     border-radius: 50%;
-    box-shadow: 0px 0px 100px 30px rgba(128, 0, 128, .5);
+    box-shadow: 0px 0px 100px 30px rgba(234, 76, 137, .5);
     animation: turn 36s linear infinite;
 
     @keyframes turn{
