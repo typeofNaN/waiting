@@ -31,6 +31,7 @@
             v-for="(singleItem, singleIndex) in singleList"
             :key="singleIndex"
             class="single_item"
+            @click="playSingle(singleItem)"
           >
             <v-list-item-content class="single_content">
               <v-list-item-title class="single_name">{{ singleItem.name }}</v-list-item-title>
@@ -161,7 +162,7 @@ export default {
   name: 'Search',
   data () {
     return {
-      searchText: '陈奕迅',
+      searchText: '',
       currentTab: 0,
       searchTabList: searchTabList,
       pageNum: 1,
@@ -228,6 +229,9 @@ export default {
       this.currentTab = val
       this.pageNum = 1
       this.search()
+    },
+    playSingle (singleItem) {
+      this.$store.dispatch('playMusic', singleItem.id)
     },
     playAlbum (albumItem) {
       // this.$store.dispatch('playAlbumList', {id: albumItem.id})

@@ -238,6 +238,35 @@ router.get('/check/music', (req, res, next) => {
     }
   )
 })
+router.get('/comment/hot', (req, res, next) => {
+  const rid = req.query.id
+  const cookie = req.get('Cookie') ? req.get('Cookie') : ''
+  const type = {
+    0: 'R_SO_4_', //  歌曲
+    1: 'R_MV_5_', //  MV
+    2: 'A_PL_0_', //  歌单
+    3: 'R_AL_3_', //  专辑
+    4: 'A_DJ_1_', //  电台,
+    5: 'R_VI_62_' //  视频
+  }[query.type]
+  const data = {
+    offset: req.query.offset || 0,
+    rid: rid,
+    limit: req.query.limit || 20,
+    csrf_token: ''
+  }
+  createWebAPIRequest(
+    'music.163.com',
+    `/weapi/v1/resource/hotcomments/${type}${rid}/?csrf_token=`,
+    'POST',
+    data,
+    cookie,
+    musicReq => {
+      res.send(musicReq)
+    },
+    () => res.status(502).send('fetch error')
+  )
+})
 router.get('/comment/album', (req, res, next) => {
   const rid = req.query.id
   const cookie = req.get('Cookie') ? req.get('Cookie') : ''

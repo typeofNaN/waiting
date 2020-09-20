@@ -1,0 +1,142 @@
+/**
+ * @description 评论页面样式
+ * @author typeofNaN
+ * @time 2020-09-20
+ */
+
+ #comment {
+  display: flex;
+
+  .song_info {
+    position: relative;
+    width: 320px;
+    height: 100vh;
+    overflow: hidden;
+
+    .song_cover {
+      height: 100%;
+    }
+
+    .lyric {
+      position: absolute;
+      left: 0;
+      top: 200px;
+      padding: 10px 20px;
+      background-color: #000;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .cover {
+      position: absolute;
+      left: 0;
+      top: 260px;
+      padding: 10px 20px;
+      background-color: #000;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .infos {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .3);
+
+      .title {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding: 20px;
+        background-image: linear-gradient(to top, #fff, rgb(0, 0, 0, 0));
+
+        .name {
+          margin-bottom: 0;
+          font-size: 24px;
+          font-weight: 300;
+          color: #fff;
+        }
+
+        .line {
+          border: 1px solid #fff;
+        }
+
+        .author {
+          margin-top: 10px;
+          margin-bottom: 0;
+          font-size: 10px;
+          color: #606266;
+        }
+      }
+    }
+  }
+
+  .comment_tabs {
+    .v-tabs-bar {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+
+  .comments {
+    padding-top: 30px;
+    width: 480px;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, .8);
+
+    .comment_list {
+      height: 440px;
+      overflow-y: auto;
+
+      .hot_comment_list {
+        background-color: rgba(255, 255, 255, 0);
+
+        .hot_item {
+          .avatar {
+            margin: 16px;
+            align-items: flex-start;
+            align-self: start;
+          }
+
+          .hot_content {
+            font-size: 13px;
+            color: #303133;
+
+            p {
+              text-align: right;
+              color: #606266;
+              font-size: 11px;
+            }
+          }
+        }
+      }
+
+      .new_comment_list {
+        background-color: rgba(255, 255, 255, 0);
+
+        .new_item {
+          .avatar {
+            margin: 16px;
+            align-items: flex-start;
+            align-self: start;
+          }
+
+          .new_content {
+            font-size: 13px;
+            color: #303133;
+
+            p {
+              text-align: right;
+              color: #606266;
+              font-size: 11px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

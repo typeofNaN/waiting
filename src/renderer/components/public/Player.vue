@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="showInFooter"
+    v-show="!hideInFooter"
     id="player"
   >
     <div class="time_slider">
@@ -13,7 +13,10 @@
       ></v-slider>
     </div>
     <div class="player_left">
-      <div class="music_img">
+      <div
+        class="music_img"
+        @click="toCover"
+      >
         <img :src="cover" alt="">
         <audio
           v-if="play_url"
@@ -29,8 +32,8 @@
       </div>
     </div>
     <div class="player_right">
-      <span>歌词</span>
-      <span>评论</span>
+      <span @click="toLrc">歌词</span>
+      <span @click="toComment">评论</span>
       <v-icon
         v-show="play_type === 0"
         class="player_icon"
@@ -226,11 +229,26 @@ export default {
       })
       return sIndex >= 0 ? this.getPlayerList[sIndex] : false
     },
-    showInFooter () {
-      return this.$route.path !== '/account/signin'
+    hideInFooter () {
+      return (this.$route.path === '/account/signin') || (this.$route.path === '/cover') || (this.$route.path.indexOf('/lrc') >= 0) || (this.$route.path.indexOf('comment') >= 0)
     }
   },
   methods: {
+    toCover () {
+      if (this.play_url) {
+        this.$router.push('/cover')
+      }
+    },
+    toLrc () {
+      if (this.play_url) {
+        this.$router.push(`/lrc/${this.getPlayerSong.id}`)
+      }
+    },
+    toComment () {
+      if (this.play_url) {
+        this.$router.push(`/song-comment/${this.getPlayerSong.id}`)
+      }
+    },
     getSong () {
       // this.$store.dispatch('playMusic', 450612833)
       this.$store.dispatch('playMusic', 65538)

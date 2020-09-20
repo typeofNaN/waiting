@@ -12,7 +12,8 @@ const opts = {
         // primary: colors.red.darken1, // #E53935
         // secondary: colors.red.lighten4, // #FFCDD2
         // accent: colors.indigo.base // #3F51B5
-        primary: '#409EFF',
+        // primary: '#409EFF',
+        primary: '#ea4c89',
         success: '#67C23A',
         warning: '#E6A23C',
         danger: '#F56C6C',

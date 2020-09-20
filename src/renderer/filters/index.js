@@ -24,3 +24,12 @@ export const parseTime = timeNum => Tools.parseTime(timeNum, '{y}/{m}/{d}')
  * @returns 格式化后的时间
  */
 export const formatDuring = timeNum => Tools.formatDuring(timeNum)
+
+/**
+ * @desxription 将毫秒格式化成时间  多少天前
+ * @author typeofNaN
+ * @time 2020-09-20
+ * @param { timeNum } 时间戳
+ * @returns 格式化后的时间
+ */
+export const timeAgo = timeNum => Tools.timeAgo(timeNum)

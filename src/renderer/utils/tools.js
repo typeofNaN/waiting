@@ -319,6 +319,40 @@ class Tools {
     s ? (text += `${this.addZero(s)}`) : (text += '00')
     return text || '-'
   }
+
+  /**
+   * @desxription 将毫秒格式化成时间  多少天前
+   * @author typeofNaN
+   * @time 2020-09-20
+   * @param { time } 时间戳
+   * @returns 格式化后的时间
+   */
+  timeAgo (time) {
+    const between = Date.now() / 1000 - Number(new Date(time).getTime() / 1000)
+    if (between < 3600) {
+      return this.pluralize(~~(between / 60), ' 分钟')
+    } else if (between < 86400) {
+      return this.pluralize(~~(between / 3600), ' 小时')
+    } else if (between < (86400 * 30)) {
+      return this.pluralize(~~(between / 86400), ' 天')
+    } else if (between < (86400 * 30 * 12)) {
+      return this.pluralize(~~(between / (86400 * 30)), ' 月')
+    } else {
+      return this.pluralize(~~(between / (86400 * 30 * 12)), ' 年')
+    }
+  }
+
+  /**
+   * @desxription 格式化时间字符串
+   * @author typeofNaN
+   * @time 2020-09-20
+   * @param { time } 时间
+   * @param { label } 时间格式
+   * @returns 格式化后的时间
+   */
+  pluralize (time, label) {
+    return time + label
+  }
 }
 
 export default new Tools()
