@@ -75,7 +75,6 @@
                 v-model="pageNum"
                 :length="pageCount"
                 :total-visible="7"
-                circle
                 @input="pageNumChange"
               ></v-pagination>
             </div>

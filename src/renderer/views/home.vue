@@ -20,7 +20,14 @@
           <v-btn
             text
             class="home_left_btn"
-          >播放列表</v-btn>
+          >走过秋冬</v-btn>
+        </v-row>
+        <v-row class="play_list">
+          <v-btn
+            text
+            class="home_left_btn"
+            @click="toWarm"
+          >温暖依旧</v-btn>
         </v-row>
       </v-col>
       <v-col class="home_right">
@@ -84,6 +91,9 @@ export default {
     },
     playCurrentList (playItem) {
       this.$store.dispatch('playPlayerList', {id: playItem.id})
+    },
+    toWarm () {
+      this.$router.push('/warm')
     }
   }
 }

@@ -4,7 +4,9 @@
       <img :src="musicPicUrl" alt="" class="main_bg">
       <div class="default_main">
         <app-main @showDrawer="showDrawer"></app-main>
-        <router-view></router-view>
+        <keep-alive :include="['Home', 'Search']">
+          <router-view></router-view>
+        </keep-alive>
         <player/>
       </div>
       <v-navigation-drawer

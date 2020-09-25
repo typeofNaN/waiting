@@ -59,9 +59,9 @@ export default {
       this.$router.push('/')
     },
     signIn () {
-      // this.$store.dispatch('login', {
-      //   signInData: this.signinForm
-      // })
+      this.$store.dispatch('login', {
+        signInData: this.signinForm
+      })
     }
   }
 }

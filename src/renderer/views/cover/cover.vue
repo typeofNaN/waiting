@@ -38,7 +38,7 @@ export default {
     box-shadow: 0px 0px 100px 30px rgba(234, 76, 137, .5);
     animation: turn 36s linear infinite;
 
-    @keyframes turn{
+    @keyframes turn {
       0% {
         -webkit-transform: rotate(0deg);
       }

@@ -21,6 +21,8 @@ const Lrc = () => import('@/views/lrc/lrc.vue')
 const SongComment = () => import('@/views/comment/comment.vue')
 // 歌单评论
 const PlaylistComment = () => import('@/views/comment/comment.vue')
+// warm
+const Warm = () => import('@/views/warm/warm.vue')
 
 const HomeRoute = {
   path: '/',
@@ -70,6 +72,12 @@ const PlaylistCommentRoute = {
   component: PlaylistComment
 }
 
+const WarmRoute = {
+  path: '/warm',
+  name: 'Warm',
+  component: Warm
+}
+
 export {
   HomeRoute,
   SearchRoute,
@@ -78,5 +86,6 @@ export {
   CoverRoute,
   LrcRoute,
   SongCommentRoute,
-  PlaylistCommentRoute
+  PlaylistCommentRoute,
+  WarmRoute
 }
