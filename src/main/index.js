@@ -71,7 +71,7 @@ function createWindow () {
     resizable: false,
     skipTaskbar: false,
     transparent: false,
-    title: 'waiting',
+    title: '网愈云音乐',
     autoHideMenuBar: true,
     x: 0,
     y: 0,

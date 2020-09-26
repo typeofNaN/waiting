@@ -160,8 +160,8 @@ export default {
     getPlayerCurrentTime (val) {
       this.play_time = val
     },
-    play_url (url) {
-      if (!url) {
+    play_url () {
+      if (!this.play_url.url) {
         this.playAfter()
       }
     }
@@ -182,7 +182,7 @@ export default {
       try {
         return this.getPlayerSong.al.picUrl
       } catch (e) {
-        return 'http://p2.music.126.net/o_OjL_NZNoeog9fIjBXAyw==/18782957139233959.jpg'
+        return 'http://p2.music.126.net/dqzW8nWXBQaoyTlPOHVc-A==/109951165338655031.jpg'
       }
     },
     name () {
@@ -296,6 +296,9 @@ export default {
     playBefore () {
       if (this.before_song) {
         this.$store.dispatch('playMusic', this.before_song.id)
+        if (!this.play_url.url) {
+          this.playBefore()
+        }
       }
     },
     playAfter () {

@@ -7,7 +7,7 @@
     >mdi-refresh</v-icon>
     <div class="warm_box">
       <p class="content">{{ warmObj.content }}</p>
-      <p class="resource"><span></span> {{ warmObj.author }} 《{{ warmObj.song }}》</p>
+      <p class="resource"><span></span> 《{{ warmObj.song }}》</p>
     </div>
   </div>
 </template>
@@ -57,9 +57,10 @@ export default {
   }
 
   .warm_box {
-    width: 460px;
+    width: 360px;
     color: #ea4c89;
     font-size: 13px;
+    font-style: italic;
 
     p.resource {
       text-align: right;

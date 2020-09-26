@@ -14,7 +14,7 @@
             text
             class="home_left_btn"
             @click="search"
-          >搜 索</v-btn>
+          >众里寻它千百度</v-btn>
         </v-row>
         <v-row class="play_list">
           <v-btn
@@ -27,7 +27,7 @@
             text
             class="home_left_btn"
             @click="toWarm"
-          >温暖依旧</v-btn>
+          >温情依旧</v-btn>
         </v-row>
       </v-col>
       <v-col class="home_right">

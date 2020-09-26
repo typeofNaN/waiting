@@ -1,5 +1,5 @@
 {
-  "name": "waiting",
+  "name": "网愈云音乐",
   "version": "0.0.1",
   "author": "typeofNaN <dmdefine6@gmail.com>",
   "description": "An electron-vue project",
@@ -22,7 +22,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "云音乐",
+    "productName": "网愈云音乐",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"

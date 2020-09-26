@@ -4,9 +4,11 @@
       <img :src="musicPicUrl" alt="" class="main_bg">
       <div class="default_main">
         <app-main @showDrawer="showDrawer"></app-main>
-        <keep-alive :include="['Home', 'Search']">
-          <router-view></router-view>
-        </keep-alive>
+        <transition name="fade">
+          <keep-alive :include="['Home', 'Search']">
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
         <player/>
       </div>
       <v-navigation-drawer
@@ -74,9 +76,9 @@ export default {
     ]),
     musicPicUrl () {
       try {
-        return this.getPlayerSong.al.picUrl || ''
+        return this.getPlayerSong.al.picUrl || 'http://p2.music.126.net/dqzW8nWXBQaoyTlPOHVc-A==/109951165338655031.jpg'
       } catch (e) {
-        return ''
+        return 'http://p2.music.126.net/dqzW8nWXBQaoyTlPOHVc-A==/109951165338655031.jpg'
       }
     }
   },
@@ -126,5 +128,12 @@ export default {
       }
     }
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .4s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
