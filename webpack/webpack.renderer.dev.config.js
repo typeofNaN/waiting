@@ -18,12 +18,12 @@ module.exports = merge.smart(baseConfig, {
     }
   },
   devServer: {
-    port: 2003,
+    port: 9080,
     compress: true,
     noInfo: true,
     stats: 'errors-only',
     inline: true,
-    hotOnly: true,
+    hot: true,
     contentBase: path.join(__dirname, '../dist'),
     historyApiFallback: {
       verbose: true,
