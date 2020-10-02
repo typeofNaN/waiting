@@ -1,10 +1,13 @@
-import { get } from 'utils/request';
+import { get } from 'utils/request'
 
 interface IArtistsQuery {
-    id: number;
+  id: number
 }
 // 歌手单曲
 export default (query: IArtistsQuery) => {
-    const path = `/artist/${query.id}`;
-    return get(path, {});
-};
+  const path = `/artists/${query.id}`
+  const data = {
+    id: query.id
+  }
+  return get(path, data)
+}
