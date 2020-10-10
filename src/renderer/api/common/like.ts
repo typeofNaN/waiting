@@ -1,19 +1,19 @@
-import { get } from 'utils/request';
+import { get } from 'utils/request'
 
 interface ILikeQuery {
-    id: number;
-    alg?: string;
-    like: boolean;
-    time?: number;
+  id: number
+  alg?: string
+  like: boolean
+  time?: number
 }
 // 红心与取消红心歌曲
 export default (query: ILikeQuery) => {
-    const path = `/radio/like?alg=${query.alg || 'itembased'}&trackId=${query.id}&like=${
-        query.like
-    }&time=${query.time || 25}`;
-    const data = {
-        trackId: query.id,
-        like: query.like
-    };
-    return get(path, data);
-};
+  const path = '/like'
+  const data = {
+    id: query.id,
+    like: query.like,
+    alg: query.alg,
+    time: query.time
+  }
+  return get(path, data)
+}

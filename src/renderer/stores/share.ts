@@ -1,13 +1,13 @@
-import { action, observable } from 'mobx';
+import { action, observable } from 'mobx'
 
 class Share {
-    @observable show = false;
+  @observable
+  public show = false
 
-    @action
-    toggle = (show = !this.show) => {
-        this.show = show;
-    };
+  @action
+  public toggle = (show = !this.show) => {
+    this.show = show
+  }
 }
 
-const self = new Share();
-export default self;
+export default new Share()

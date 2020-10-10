@@ -1,36 +1,40 @@
-import ISong from 'interface/ISong';
-import { action, observable } from 'mobx';
-import controller from './controller';
+import { action, observable } from 'mobx'
+
+import ISong from 'interface/ISong'
+import controller from './controller'
 
 class UpNext {
-    @observable show = false;
+  @observable
+  public show = false
 
-    @observable song: ISong = {
-        album: {},
-        artists: []
-    };
+  @observable
+  public song: ISong = {
+    album: {},
+    artists: []
+  }
 
-    // Save the canceled song
-    canceled: ISong = null;
+  // Save the canceled song
+  public canceled: ISong = null
 
-    @action toggle(song: ISong, show = !this.show) {
-        this.song = song;
-        this.show = show;
+  @action
+  public toggle(song: ISong, show = !this.show) {
+    this.song = song
+    this.show = show
+  }
+
+  @action
+  public hide() {
+    this.show = false
+  }
+
+  @action
+  public cancel(song = controller.song) {
+    this.canceled = song
+
+    if (song) {
+      this.show = false
     }
-
-    @action
-    hide() {
-        this.show = false;
-    }
-
-    @action cancel(song = controller.song) {
-        this.canceled = song;
-
-        if (song) {
-            this.show = false;
-        }
-    }
+  }
 }
 
-const self = new UpNext();
-export default self;
+export default  new UpNext()

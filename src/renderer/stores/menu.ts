@@ -1,13 +1,13 @@
-import { observable, action } from 'mobx';
+import { observable, action } from 'mobx'
 
 class Menu {
-    @observable show = false;
+  @observable
+  public show = false
 
-    @action
-    toggle = (show = !this.show) => {
-        this.show = show;
-    };
+  @action
+  public toggle = (show = !this.show) => {
+    this.show = show
+  }
 }
 
-const self = new Menu();
-export default self;
+export default new Menu()

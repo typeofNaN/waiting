@@ -1,8 +1,8 @@
-import ISong from './ISong';
+import ISong from './ISong'
 
 export default interface IPlayList {
-    id?: number | string;
-    songs?: ISong[];
-    name?: string;
-    link?: string;
+  id?: number | string
+  songs?: ISong[]
+  name?: string
+  link?: string
 }

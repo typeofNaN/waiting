@@ -1,47 +1,49 @@
-import ISong from 'interface/ISong';
-import { action, observable } from 'mobx';
-import * as pinyin from 'tiny-pinyin';
-import controller from './controller';
+import { action, observable } from 'mobx'
+import * as pinyin from 'tiny-pinyin'
+
+import ISong from 'interface/ISong'
+import controller from './controller'
 
 class Playing {
-    @observable show = false;
+  @observable
+  public show = false
 
-    @observable filtered: ISong[] = [];
+  @observable
+  public filtered: ISong[] = []
 
-    timer: number;
+  public timer: number
 
-    @action
-    toggle = (show = !this.show) => {
-        this.show = show;
-    };
+  @action
+  public toggle = (show = !this.show) => {
+    this.show = show
+  }
 
-    @action
-    doFilter = (text: string) => {
-        let songs = [];
+  @action
+  public doFilter = (text: string) => {
+    let songs = []
 
-        // Convert text to chinese pinyin
-        const letterText = pinyin.convertToPinyin(text.trim());
+    // Convert text to chinese pinyin
+    const letterText = pinyin.convertToPinyin(text.trim())
 
-        songs = controller.playlist.songs.filter(e => {
-            return (
-                false ||
-                // Fuzzy match the song name
-                pinyin.convertToPinyin(e.name).indexOf(letterText) > -1 ||
-                // Fuzzy match the album name
-                pinyin.convertToPinyin(e.album.name).indexOf(letterText) > -1 ||
-                // Mathc the artist name
-                e.artists.findIndex(artist => pinyin.convertToPinyin(artist.name).indexOf(letterText) > -1) !== -1
-            );
-        });
+    songs = controller.playlist.songs.filter(e => {
+      return (
+        false ||
+        // Fuzzy match the song name
+        pinyin.convertToPinyin(e.name).indexOf(letterText) > -1 ||
+        // Fuzzy match the album name
+        pinyin.convertToPinyin(e.album.name).indexOf(letterText) > -1 ||
+        // Mathc the artist name
+        e.artists.findIndex(artist => pinyin.convertToPinyin(artist.name).indexOf(letterText) > -1) !== -1
+      )
+    })
 
-        this.filtered = songs;
-    };
+    this.filtered = songs
+  }
 
-    filter = (text = '') => {
-        clearTimeout(this.timer);
-        this.timer = window.setTimeout(() => this.doFilter(text), 50);
-    };
+  public filter = (text = '') => {
+    clearTimeout(this.timer)
+    this.timer = window.setTimeout(() => this.doFilter(text), 50)
+  }
 }
 
-const self = new Playing();
-export default self;
+export default new Playing()

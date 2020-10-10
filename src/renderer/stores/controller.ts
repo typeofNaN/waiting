@@ -1,282 +1,287 @@
-import { getSongUrl } from 'api/player';
-import { ipcRenderer } from 'electron';
-import IPlayList from 'interface/IPlayList';
-import ISong from 'interface/ISong';
-import { action, observable, runInAction } from 'mobx';
-import lastfm from 'utils/lastfm';
-import comments from './comments';
-import fm from './fm';
-import preferences from './preferences';
-import upnext from './upnext';
+import { action, observable, runInAction } from 'mobx'
 
-const PLAYER_SHUFFLE = 0;
-const PLAYER_REPEAT = 1;
-const PLAYER_LOOP = 2;
-const MODES = [PLAYER_SHUFFLE, PLAYER_REPEAT, PLAYER_LOOP];
+import { getSongUrl } from 'api/player'
+import { ipcRenderer } from 'electron'
+import IPlayList from 'interface/IPlayList'
+import ISong from 'interface/ISong'
+import lastfm from 'utils/lastfm'
+import comments from './comments'
+import fm from './fm'
+import preferences from './preferences'
+import upnext from './upnext'
+
+const PLAYER_SHUFFLE = 0
+const PLAYER_REPEAT = 1
+const PLAYER_LOOP = 2
+const MODES = [PLAYER_SHUFFLE, PLAYER_REPEAT, PLAYER_LOOP]
 
 class Controller {
-    @observable playing = false;
+  @observable
+  public playing = false
 
-    @observable mode = PLAYER_SHUFFLE;
+  @observable
+  public mode = PLAYER_SHUFFLE
 
-    // A struct should contains 'id' and 'songs'
-    @observable playlist: IPlayList = {};
+  // A struct should contains 'id' and 'songs'
+  @observable
+  public playlist: IPlayList = {}
 
-    // Currently played song
-    @observable song: ISong = {};
+  // Currently played song
+  @observable
+  public song: ISong = {}
 
-    // Keep a history with current playlist
-    history: number[] = [];
+  // Keep a history with current playlist
+  public history: number[] = []
 
-    @action async setup(playlist: any) {
-        if (this.playlist.id === playlist.id && playlist.id !== 'PERSONAL_FM') {
-            return;
-        }
-
-        this.playing = false;
-        this.history = [];
-
-        // Disconnect all observer
-        this.playlist = JSON.parse(JSON.stringify(playlist));
-        const [song] = playlist.songs;
-        this.song = song;
-
-        ipcRenderer.send('update-playing', {
-            songs: playlist.songs.slice()
-        });
+  @action
+  public async setup(playlist: any) {
+    if (this.playlist.id === playlist.id && playlist.id !== 'PERSONAL_FM') {
+      return
     }
 
-    @action
-    async play(songId?: number, forward = true) {
-        if (!this.playlist || !this.playlist.songs) {
-            return;
-        }
-        const songs = this.playlist.songs.slice();
-        let song;
+    this.playing = false
+    this.history = []
 
-        if (!(upnext.canceled && upnext.canceled.id === songId)) {
-            // Keep upnext modal singleton
-            upnext.show = false;
-        }
+    // Disconnect all observer
+    this.playlist = JSON.parse(JSON.stringify(playlist))
+    const [song] = playlist.songs
+    this.song = song
 
-        if (songId) {
-            song = songs.find(e => e.id === songId);
-        }
+    ipcRenderer.send('update-playing', {
+      songs: playlist.songs.slice()
+    })
+  }
 
-        song = song || songs[0];
+  @action
+  public async play(songId?: number, forward = true) {
+    if (!this.playlist || !this.playlist.songs) {
+      return
+    }
+    const songs = this.playlist.songs.slice()
+    let song
 
-        // Save to history list
-        if (!this.history.includes(songId)) {
-            this.history[forward ? 'push' : 'unshift'](song.id);
-
-            ipcRenderer.send('update-history', {
-                songs: this.playlist.songs.filter(e => this.history.includes(e.id))
-            });
-        }
-
-        if (this.playlist.id === 'PERSONAL_FM') {
-            fm.song = song;
-        }
-
-        if (preferences.showNotification) {
-            const notification = new Notification(song.name, {
-                icon: song.album.cover,
-                body: song.artists.map(e => e.name).join(' / '),
-                vibrate: [200, 100, 200]
-            });
-
-            notification.onclick = () => {
-                ipcRenderer.send('show');
-            };
-        }
-
-        this.playing = true;
-        this.song = song;
-        this.updateStatus();
-        comments.getList(song);
-        await this.resolveSong();
-        await lastfm.playing(song);
+    if (!(upnext.canceled && upnext.canceled.id === songId)) {
+      // Keep upnext modal singleton
+      upnext.show = false
     }
 
-    @action
-    resolveSong = async () => {
-        const { song } = this;
+    if (songId) {
+      song = songs.find(e => e.id === songId)
+    }
 
-        try {
-            const data = await getSongUrl({
-                id: song.id
-            });
-            runInAction(() => {
-                this.song = Object.assign({}, this.song, { data }, { waiting: false });
-            });
-        } catch (ex) {
-            console.error(ex);
-        }
-    };
+    song = song || songs[0]
 
-    @action
-    pause = () => {
-        this.playing = false;
-    };
+    // Save to history list
+    if (!this.history.includes(songId)) {
+      this.history[forward ? 'push' : 'unshift'](song.id)
 
-    prev = async () => {
-        const { history, song, playlist } = this;
-        let index = history.indexOf(song.id);
+      ipcRenderer.send('update-history', {
+        songs: this.playlist.songs.filter(e => this.history.includes(e.id))
+      })
+    }
 
-        if (--index >= 0) {
-            await this.play(history[index], false);
-            return;
-        }
+    if (this.playlist.id === 'PERSONAL_FM') {
+      fm.song = song
+    }
 
-        if (this.mode === PLAYER_SHUFFLE) {
-            const songs = this.playlist.songs.filter(e => history.indexOf(e.id) === -1);
-            if (songs.length === 0) {
-                await this.play(history[history.length - 1]);
-                return;
-            }
-            index = Math.floor(Math.random() * songs.length);
-            const unPlaySong = songs[index];
-            await this.play(unPlaySong.id, false);
-            return;
-        }
+    if (preferences.showNotification) {
+      const notification = new Notification(song.name, {
+        icon: song.album.cover,
+        body: song.artists.map(e => e.name).join(' / '),
+        vibrate: [200, 100, 200]
+      })
 
-        index = playlist.songs.findIndex(e => e.id === song.id);
+      notification.onclick = () => {
+        ipcRenderer.send('show')
+      }
+    }
 
-        if (--index < 0) {
-            index = playlist.songs.length - 1;
-        }
+    this.playing = true
+    this.song = song
+    this.updateStatus()
+    comments.getList(song)
+    await this.resolveSong()
+    await lastfm.playing(song)
+  }
 
-        await this.play(playlist.songs[index].id, false);
-    };
+  @action
+  public resolveSong = async () => {
+    const { song } = this
 
-    tryTheNext = async () => {
-        const next = await this.next(false, false);
-        if (!next) return;
-        if (next.id === this.song.id) {
-            this.playing = false;
-            return;
-        }
-        upnext.toggle(next);
-    };
+    try {
+      const data = await getSongUrl({
+        id: song.id
+      })
+      runInAction(() => {
+        this.song = Object.assign({}, this.song, { data }, { waiting: false })
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
-    next = async (loop = false, autoPlay = true) => {
-        let songs = this.playlist.songs.slice();
-        const { history, song } = this;
-        let index = history.indexOf(song.id);
-        let next: number;
-        let nextSong;
+  @action
+  public pause = () => {
+    this.playing = false
+  }
 
-        switch (true) {
-            // In the loop mode, manual shuffle immediate play the next song
-            case loop === true && this.mode === PLAYER_LOOP:
-                next = this.song.id;
-                break;
+  public prev = async () => {
+    const { history, song, playlist } = this
+    let index = history.indexOf(song.id)
 
-            case this.playlist.id === 'PERSONAL_FM':
-                fm.next();
-                return;
+    if (--index >= 0) {
+      await this.play(history[index], false)
+      return
+    }
 
-            /* Already in history */
-            case ++index < history.length:
-                next = history[index];
-                break;
+    if (this.mode === PLAYER_SHUFFLE) {
+      const songs = this.playlist.songs.filter(e => history.indexOf(e.id) === -1)
+      if (songs.length === 0) {
+        await this.play(history[history.length - 1])
+        return
+      }
+      index = Math.floor(Math.random() * songs.length)
+      const unPlaySong = songs[index]
+      await this.play(unPlaySong.id, false)
+      return
+    }
 
-            case this.mode !== PLAYER_SHUFFLE:
-                // Get song from current track list
-                index = songs.findIndex(e => e.id === song.id);
+    index = playlist.songs.findIndex(e => e.id === song.id)
 
-                if (++index < songs.length) {
-                    nextSong = songs[index];
-                } else {
-                    [nextSong] = songs;
-                }
+    if (--index < 0) {
+      index = playlist.songs.length - 1
+    }
 
-                next = nextSong.id;
-                break;
+    await this.play(playlist.songs[index].id, false)
+  }
 
-            default:
-                // Random a song from the remaining
-                songs = songs.filter(e => !history.includes(e.id));
+  public tryTheNext = async () => {
+    const next = await this.next(false, false)
+    if (!next) return
+    if (next.id === this.song.id) {
+      this.playing = false
+      return
+    }
+    upnext.toggle(next)
+  }
 
-                if (songs.length) {
-                    next = songs[Math.floor(Math.random() * songs.length)].id;
-                } else {
-                    [next] = history;
-                }
-        }
+  public next = async (loop = false, autoPlay = true) => {
+    let songs = this.playlist.songs.slice()
+    const { history, song } = this
+    let index = history.indexOf(song.id)
+    let next: number
+    let nextSong
 
-        try {
-            if (autoPlay) {
-                this.play(next);
-                return;
-            }
-        } catch (ex) {
-            // Anti-warnning
-        }
-        return songs.find(e => e.id === next);
-    };
+    switch (true) {
+      // In the loop mode, manual shuffle immediate play the next song
+      case loop === true && this.mode === PLAYER_LOOP:
+        next = this.song.id
+        break
 
-    stop = () => {
-        const audio = document.querySelector('audio');
+      case this.playlist.id === 'PERSONAL_FM':
+        fm.next()
+        return
 
-        if (audio) {
-            audio.pause();
-            audio.src = '';
-            audio.currentTime = 0;
-        }
-    };
+      /* Already in history */
+      case ++index < history.length:
+        next = history[index]
+        break
 
-    @action
-    toggle = async () => {
-        this.playing = !this.playing;
+      case this.mode !== PLAYER_SHUFFLE:
+        // Get song from current track list
+        index = songs.findIndex(e => e.id === song.id)
 
-        if (this.playing && upnext.canceled) {
-            await this.play(upnext.canceled.id, false);
-            upnext.cancel(null);
-        }
-
-        this.updateStatus();
-    };
-
-    @action
-    changeMode = (mode?: 0 | 1 | 2) => {
-        let index = MODES.indexOf(this.mode);
-
-        if (mode === undefined) {
-            if (++index < MODES.length) {
-                this.mode = MODES[index];
-            } else {
-                this.mode = MODES[0];
-            }
-            return;
-        }
-        if (MODES.includes(mode)) {
-            this.mode = mode;
+        if (++index < songs.length) {
+          nextSong = songs[index]
         } else {
-            this.mode = PLAYER_SHUFFLE;
+          [nextSong] = songs
         }
 
-        this.updateStatus();
-    };
+        next = nextSong.id
+        break
 
-    scrobble = () => {
-        lastfm.scrobble(this.song);
-    };
+      default:
+        // Random a song from the remaining
+        songs = songs.filter(e => !history.includes(e.id))
 
-    updateStatus() {
-        ipcRenderer.send('update-status', {
-            playing: this.playing,
-            song: this.song,
-            modes: MODES.map(e => {
-                return {
-                    mode: e,
-                    enabled: e === this.mode
-                };
-            })
-        });
+        if (songs.length) {
+          next = songs[Math.floor(Math.random() * songs.length)].id
+        } else {
+          [next] = history
+        }
     }
+
+    try {
+      if (autoPlay) {
+        this.play(next)
+        return
+      }
+    } catch (ex) {
+      // Anti-warnning
+    }
+    return songs.find(e => e.id === next)
+  }
+
+  public stop = () => {
+    const audio = document.querySelector('audio')
+
+    if (audio) {
+      audio.pause()
+      audio.src = ''
+      audio.currentTime = 0
+    }
+  }
+
+  @action
+  public toggle = async () => {
+    this.playing = !this.playing
+
+    if (this.playing && upnext.canceled) {
+      await this.play(upnext.canceled.id, false)
+      upnext.cancel(null)
+    }
+
+    this.updateStatus()
+  }
+
+  @action
+  public changeMode = (mode?: 0 | 1 | 2) => {
+    let index = MODES.indexOf(this.mode)
+
+    if (mode === undefined) {
+      if (++index < MODES.length) {
+        this.mode = MODES[index]
+      } else {
+        this.mode = MODES[0]
+      }
+      return
+    }
+    if (MODES.includes(mode)) {
+      this.mode = mode
+    } else {
+      this.mode = PLAYER_SHUFFLE
+    }
+
+    this.updateStatus()
+  }
+
+  public scrobble = () => {
+    lastfm.scrobble(this.song)
+  }
+
+  public updateStatus() {
+    ipcRenderer.send('update-status', {
+      playing: this.playing,
+      song: this.song,
+      modes: MODES.map(e => {
+        return {
+          mode: e,
+          enabled: e === this.mode
+        }
+      })
+    })
+  }
 }
 
-export { PLAYER_LOOP, PLAYER_SHUFFLE, PLAYER_REPEAT };
-const controller = new Controller();
-export default controller;
+export { PLAYER_LOOP, PLAYER_SHUFFLE, PLAYER_REPEAT }
+export default new Controller()

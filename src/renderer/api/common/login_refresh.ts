@@ -1,6 +1,6 @@
-import { get } from 'utils/request';
+import { get } from 'utils/request'
 // 登录刷新
 export default () => {
-    const path = `/login/token/refresh`;
-    return get(path, {});
-};
+  const path = `/login/refresh`
+  return get(path, {})
+}

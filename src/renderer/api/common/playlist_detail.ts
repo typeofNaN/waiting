@@ -1,15 +1,14 @@
-import { get } from 'utils/request';
+import { get } from 'utils/request'
 interface IPlaylistDetailQuery {
-    id: number;
-    s?: number;
+  id: number
+  s?: number
 }
 // 歌单详情
 export default (query: IPlaylistDetailQuery) => {
-    const path = '/playlist/detail';
-    const data = {
-        id: query.id,
-        n: 100000,
-        s: query.s || 8
-    };
-    return get(path, data);
-};
+  const path = '/playlist/detail'
+  const data = {
+    id: query.id,
+    s: query.s || 8
+  }
+  return get(path, data)
+}

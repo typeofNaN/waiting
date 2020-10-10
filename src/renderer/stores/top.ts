@@ -1,21 +1,23 @@
-import { getTopList } from 'api/top';
-import { action, observable, runInAction } from 'mobx';
+import { action, observable, runInAction } from 'mobx'
+
+import { getTopList } from 'api/top'
 
 class Top {
-    @observable loading = true;
+  @observable
+  public loading = true
 
-    @observable list: any = [];
+  @observable
+  public list: any = []
 
-    @action
-    getList = async () => {
-        this.loading = true;
-        const list = await getTopList();
-        runInAction(() => {
-            this.list = list;
-            this.loading = false;
-        });
-    };
+  @action
+  public getList = async () => {
+    this.loading = true
+    const list = await getTopList()
+    runInAction(() => {
+      this.list = list
+      this.loading = false
+    })
+  }
 }
 
-const top = new Top();
-export default top;
+export default new Top()
