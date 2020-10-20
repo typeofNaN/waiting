@@ -1,22 +1,25 @@
-import classnames from 'classnames';
-import * as React from 'react';
-import * as styles from './index.less';
+import classnames from 'classnames'
+import * as React from 'react'
+import * as styles from './index.less'
 
 interface IIndicatorProps {
-    className?: string;
-    style?: any;
+  className?: string
+  style?: any
 }
 
 const Indicator: React.SFC<IIndicatorProps> = props => {
-    const { className, style } = props;
-    return (
-        <div className={classnames(styles.container, className)} style={style}>
-            <span />
-            <span />
-            <span />
-            <span />
-        </div>
-    );
-};
+  const { className, style } = props
+  return (
+    <div
+      className={ classnames(styles.container, className) }
+      style={ style }
+    >
+      <span />
+      <span />
+      <span />
+      <span />
+    </div>
+  )
+}
 
-export default Indicator;
+export default Indicator
