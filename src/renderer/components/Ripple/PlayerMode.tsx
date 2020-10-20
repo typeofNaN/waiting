@@ -1,6 +1,6 @@
 import { useStore } from '@/context'
 import { Zoom } from '@material-ui/core'
-import { ReorderTwoTone, RepeatTwoTone, ShuffleTwoTone } from '@material-ui/icons'
+import { Reorder, Repeat, Shuffle } from '@material-ui/icons'
 import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { useUpdateEffect } from 'react-use'
@@ -27,13 +27,13 @@ const PlayerMode: React.SFC = observer(() => {
   const renderIndicator = (mode: number) => {
     switch (mode) {
       case PLAYER_SHUFFLE:
-        return <ShuffleTwoTone />
+        return <Shuffle />
 
       case PLAYER_REPEAT:
-        return <ReorderTwoTone />
+        return <Reorder />
 
       case PLAYER_LOOP:
-        return <RepeatTwoTone />
+        return <Repeat />
 
       default:
         return <></>

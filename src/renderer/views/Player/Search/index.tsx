@@ -31,7 +31,7 @@ const Search: React.SFC<ISearchProps> = observer(props => {
         <input
           type="text"
           onInput={ (e: any) => filter(e.target.value) }
-          placeholder="Search..."
+          placeholder="搜索..."
         />
         <img
           alt="Close"

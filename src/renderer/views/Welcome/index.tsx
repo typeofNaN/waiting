@@ -2,7 +2,7 @@ import { useStore } from '@/context'
 import { Avatar, List, ListItem, ListItemText } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import classnames from 'classnames'
-import { ArrowForwardTwoTone } from '@material-ui/icons'
+import { ArrowForward } from '@material-ui/icons'
 import Controller from 'components/Controller'
 import Indicator from 'components/Indicator'
 import Loader from 'components/Loader'
@@ -106,7 +106,7 @@ const Welcome: React.SFC = observer(() => {
         { Status({ playing: controller.playlist.id === favorite.id }) }
 
         <div className={ styles.hovered }>
-          <ArrowForwardTwoTone />
+          <ArrowForward />
         </div>
 
         <figure className={ classnames(styles.item, styles.favorite) }>
@@ -150,7 +150,7 @@ const Welcome: React.SFC = observer(() => {
         <Status playing={ controller.playlist.id === recommend.id } />
 
         <div className={ styles.hovered }>
-          <ArrowForwardTwoTone />
+          <ArrowForward />
         </div>
 
         <figure className={ classnames(styles.item, styles.recommend) }>
@@ -187,7 +187,7 @@ const Welcome: React.SFC = observer(() => {
           <Status playing={ controller.playlist.id === e.id } />
 
           <div className={ styles.hovered }>
-            <ArrowForwardTwoTone />
+            <ArrowForward />
           </div>
 
           <figure className={ classnames(styles.item, styles.large) }>
@@ -216,7 +216,7 @@ const Welcome: React.SFC = observer(() => {
                 <p>{ e.name }</p>
 
                 <small>
-                  { e.type === 0 ? `${helper.humanNumber(e.played)} PLAYED` : `${e.size} Tracks` }
+                  { e.type === 0 ? `${helper.humanNumber(e.played)} 次播放` : `${e.size} 次浏览` }
                 </small>
               </summary>
             </figcaption>
@@ -234,14 +234,14 @@ const Welcome: React.SFC = observer(() => {
     <div className={ styles.container }>
       <Loader show={ home.loading } />
       <main>
-        <aside className={styles.navs}>
+        <aside className={ styles.navs }>
           {
             logined
               ? renderProfile()
               : <Link
                   to="/login/0"
                   style={ {
-                    fontSize: 14,
+                    fontSize: 16,
                     letterSpacing: 2
                   } }>登 录</Link>
           }
@@ -254,10 +254,10 @@ const Welcome: React.SFC = observer(() => {
               <ListItemText primary="众里寻它千百度" />
             </ListItemLink>
             <ListItemLink href="#/playlist/全部">
-              <ListItemText primary="Playlist" />
+              <ListItemText primary="山河入梦" />
             </ListItemLink>
             <ListItemLink href="#/top">
-              <ListItemText primary="Top podcasts" />
+              <ListItemText primary="排行榜" />
             </ListItemLink>
             <ListItemLink
               href="#/fm"
@@ -265,7 +265,7 @@ const Welcome: React.SFC = observer(() => {
                 [styles.playing]: controller.playlist.id === 'PERSONAL_FM'
               }) }
             >
-              <ListItemText primary="Made For You" />
+              <ListItemText primary="私人订制" />
             </ListItemLink>
           </List>
         </aside>

@@ -1,6 +1,6 @@
 import { useStore } from '@/context'
 import { Button, IconButton } from '@material-ui/core'
-import { FavoriteBorderTwoTone, FavoriteTwoTone, ShareTwoTone } from '@material-ui/icons'
+import { FavoriteBorder, Favorite, Share } from '@material-ui/icons'
 import classnames from 'classnames'
 import Indicator from 'components/Indicator'
 import ProgressImage from 'components/ProgressImage'
@@ -44,15 +44,15 @@ const Hero: React.SFC<IHeroProps> = observer(props => {
           share.toggle(true)
         } }
       >
-        <ShareTwoTone />
+        <Share />
       </Button>
 
       <summary>
         <IconButton onClick={ () => (liked ? unlike(song) : like(song)) }>
           {
             liked
-              ? <FavoriteTwoTone className={ styles.liked } />
-              : <FavoriteBorderTwoTone />
+              ? <Favorite className={ styles.liked } />
+              : <FavoriteBorder />
           }
         </IconButton>
 
@@ -61,8 +61,8 @@ const Hero: React.SFC<IHeroProps> = observer(props => {
         <span className={ styles.badge }>
           {
             pathname === '/comments'
-              ? `${helper.humanNumber(commentsTotal)} Comments`
-              : 'Lyrics'
+              ? `${helper.humanNumber(commentsTotal)} 条评论`
+              : '歌词'
           }
         </span>
       </summary>
@@ -76,8 +76,8 @@ const Hero: React.SFC<IHeroProps> = observer(props => {
           <Link to={ `/${pathname === '/comments' ? 'lyrics' : 'comments'}` }>
             {
               pathname === '/comments'
-                ? 'Lyrics'
-                : `${helper.humanNumber(commentsTotal)} Comments`
+                ? '歌词'
+                : `${helper.humanNumber(commentsTotal)} 条评论`
             }
           </Link>
         </article>

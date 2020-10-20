@@ -104,6 +104,7 @@ const Legacy: React.FC<ILegacyProps> = observer(props => {
           }
         </Button>
       </footer>
+      <p className={ styles.copyright }>&copy; typeofNaN, { new Date().getFullYear() }. 由 Electron 和 日月星辰 强力驱动 | 吾之臂躯 行针步线</p>
     </div>
   )
 })

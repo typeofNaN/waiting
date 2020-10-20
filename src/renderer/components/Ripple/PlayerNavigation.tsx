@@ -1,5 +1,5 @@
 import { Zoom } from '@material-ui/core'
-import { FastForwardTwoTone, FastRewindTwoTone } from '@material-ui/icons'
+import { FastForward, FastRewind } from '@material-ui/icons'
 import { ipcRenderer } from 'electron'
 import * as React from 'react'
 import { useEffectOnce } from 'react-use'
@@ -29,7 +29,7 @@ const PlayerNavigation: React.FC = () => {
 
   return (
     <Zoom in={zoom}>
-      <div className={ styles.container }>{ direction ? <FastRewindTwoTone /> : <FastForwardTwoTone /> }</div>
+      <div className={ styles.container }>{ direction ? <FastRewind /> : <FastForward /> }</div>
     </Zoom>
   )
 }

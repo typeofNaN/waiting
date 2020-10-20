@@ -20,7 +20,7 @@ class Controller {
   public playing = false
 
   @observable
-  public mode = PLAYER_SHUFFLE
+  public mode = PLAYER_REPEAT
 
   // A struct should contains 'id' and 'songs'
   @observable

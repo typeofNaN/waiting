@@ -9,6 +9,9 @@ class Search {
   public loading = false
 
   @observable
+  public searching = false
+
+  @observable
   public playlists: any = []
 
   @observable
@@ -18,7 +21,7 @@ class Search {
   public artists: IArtist[] = []
 
   @observable
-  public users: any = []
+  public users: any[] = []
 
   public keyword = ''
 
@@ -33,12 +36,14 @@ class Search {
   @action
   public getPlaylists = async (keyword: string) => {
     this.loading = true
+    this.searching = true
     this.keyword = keyword
     const data = await searchByType('1000', keyword)
     runInAction(() => {
       this.playlists = data.playlists
       this.nextPlaylistsOffset = data.nextOffset
       this.loading = false
+      this.searching = false
     })
   }
 
@@ -47,21 +52,26 @@ class Search {
     if (this.nextPlaylistsOffset === -1) {
       return
     }
+    this.searching = true
     const data = await searchByType('1000', this.keyword, this.nextPlaylistsOffset)
     runInAction(() => {
       this.playlists.push(...data.playlists)
       this.nextPlaylistsOffset = data.nextOffset
+      this.searching = false
     })
   }
 
   @action
   public getAlbums = async (keyword: string) => {
     this.loading = true
+    this.searching = true
+    this.keyword = keyword
     const data = await searchByType('10', keyword)
     runInAction(() => {
       this.albums = data.albums
       this.nextAlbumsOffset = data.nextOffset
       this.loading = false
+      this.searching = false
     })
   }
 
@@ -70,21 +80,26 @@ class Search {
     if (this.nextAlbumsOffset === -1) {
       return
     }
+    this.searching = true
     const data = await searchByType('10', this.keyword, this.nextAlbumsOffset)
     runInAction(() => {
       this.albums.push(...data.albums)
       this.nextAlbumsOffset = data.nextOffset
+      this.searching = false
     })
   }
 
   @action
   public getArtists = async (keyword: string) => {
     this.loading = true
+    this.searching = true
+    this.keyword = keyword
     const data = await searchByType('100', keyword)
     runInAction(() => {
       this.artists = data.artists
       this.nextArtistsOffset = data.nextOffset
       this.loading = false
+      this.searching = false
     })
   }
 
@@ -93,19 +108,26 @@ class Search {
     if (this.nextArtistsOffset === -1) {
       return
     }
+    this.searching = true
     const data = await searchByType('100', this.keyword, this.nextArtistsOffset)
-    this.artists.push(...data.artists)
-    this.nextArtistsOffset = data.nextOffset
+    runInAction(() => {
+      this.artists.push(...data.artists)
+      this.nextArtistsOffset = data.nextOffset
+      this.searching = false
+    })
   }
 
   @action
   public getUsers = async (keyword: string) => {
     this.loading = true
+    this.searching = true
+    this.keyword = keyword
     const data = await searchByType('1002', keyword)
     runInAction(() => {
       this.users = data.users
       this.nextUsersOffset = data.nextOffset
       this.loading = false
+      this.searching = false
     })
   }
 
@@ -114,9 +136,13 @@ class Search {
     if (this.nextUsersOffset === -1) {
       return
     }
+    this.searching = true
     const data = await searchByType('1002', this.keyword, this.nextUsersOffset)
-    this.users.push(...data.users)
-    this.nextUsersOffset = data.nextOffset
+    runInAction(() => {
+      this.users.push(...data.users)
+      this.nextUsersOffset = data.nextOffset
+      this.searching = false
+    })
   }
 }
 

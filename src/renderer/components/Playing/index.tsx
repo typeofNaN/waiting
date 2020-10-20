@@ -175,7 +175,7 @@ const Playing: React.SFC = observer(() => {
           <input
             onInput={ (e: React.ChangeEvent<HTMLInputElement>) => playing.filter(e.target.value) }
             onKeyUp={ navigation }
-            placeholder="Search..."
+            placeholder="搜索..."
             ref={ searchRef }
             type="text"
           />

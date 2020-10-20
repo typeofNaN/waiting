@@ -17,6 +17,7 @@ module.exports = {
     '@typescript-eslint/camelcase': 0,
     '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/no-empty-interface': 0,
+    '@typescript-eslint/member-delimiter-style': 0,
     'react/prop-types': 0,
     '@typescript-eslint/no-use-before-define': 0,
     'react/display-name': 0,

@@ -1,6 +1,6 @@
 import { useStore } from '@/context'
 import { Zoom } from '@material-ui/core'
-import { VolumeDownTwoTone, VolumeMuteTwoTone, VolumeUpTwoTone } from '@material-ui/icons'
+import { VolumeDown, VolumeMute, VolumeUp } from '@material-ui/icons'
 import { ipcRenderer } from 'electron'
 import { observer } from 'mobx-react-lite'
 import * as React from 'react'
@@ -37,12 +37,12 @@ const VolumeUpDown: React.SFC = observer(() => {
 
   const renderVolume = () => {
     if (isMuted) {
-      return <VolumeMuteTwoTone />
+      return <VolumeMute />
     }
     if (direction) {
-      return <VolumeUpTwoTone />
+      return <VolumeUp />
     }
-    return <VolumeDownTwoTone />
+    return <VolumeDown />
   }
 
   return (

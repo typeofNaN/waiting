@@ -2,16 +2,15 @@ import { useStore } from '@/context'
 import { IconButton } from '@material-ui/core'
 import { red } from '@material-ui/core/colors'
 import {
-  CloudDownloadTwoTone,
-  FastForwardTwoTone,
-  FastRewindTwoTone,
-  FavoriteBorderTwoTone,
-  FavoriteTwoTone,
-  PauseCircleOutlineTwoTone,
-  PlayCircleOutlineTwoTone,
-  ReorderTwoTone,
-  RepeatTwoTone,
-  ShuffleTwoTone
+  FastForward,
+  FastRewind,
+  FavoriteBorder,
+  Favorite,
+  PauseCircleOutline,
+  PlayCircleOutline,
+  Reorder,
+  Repeat,
+  Shuffle
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import ProgressImage from 'components/ProgressImage'
@@ -63,13 +62,13 @@ const Controller: React.FC = observer(() => {
 
   const renderPlayMode = () => {
     if (mode === PLAYER_SHUFFLE) {
-      return <ShuffleTwoTone />
+      return <Shuffle />
     }
     if (mode === PLAYER_REPEAT) {
-      return <ReorderTwoTone />
+      return <Reorder />
     }
     if (mode === PLAYER_LOOP) {
-      return <RepeatTwoTone />
+      return <Repeat />
     }
   }
 
@@ -205,22 +204,19 @@ const Controller: React.FC = observer(() => {
               <IconButton onClick={ () => (liked ? unlike(song) : like(song)) }>
                 {
                   hasLogin() && liked
-                    ? <FavoriteTwoTone className={ classes.liked } />
-                    : <FavoriteBorderTwoTone />
+                    ? <Favorite className={ classes.liked } />
+                    : <FavoriteBorder />
                 }
               </IconButton>
               <IconButton onClick={ () => changeMode() }>{ renderPlayMode() }</IconButton>
-              <IconButton>
-                <CloudDownloadTwoTone />
-              </IconButton>
               <IconButton onClick={ prev }>
-                <FastRewindTwoTone />
+                <FastRewind />
               </IconButton>
               <IconButton onClick={ toggle }>
-                { playing ? <PauseCircleOutlineTwoTone /> : <PlayCircleOutlineTwoTone /> }
+                { playing ? <PauseCircleOutline /> : <PlayCircleOutline /> }
               </IconButton>
               <IconButton onClick={ () => next() }>
-                <FastForwardTwoTone />
+                <FastForward />
               </IconButton>
             </div>
           </div>

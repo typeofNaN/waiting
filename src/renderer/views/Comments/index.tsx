@@ -1,5 +1,5 @@
 import { useStore } from '@/context'
-import { ThumbUpAltTwoTone } from '@material-ui/icons'
+import { ThumbUpAlt } from '@material-ui/icons'
 import classnames from 'classnames'
 import Header from 'components/Header'
 import Hero from 'components/Hero'
@@ -97,7 +97,7 @@ const Comments: React.SFC<CommentsProps> = observer(props => {
               }) }
               data-text={ `${helper.humanNumber(item.likedCount)} liked` }
               onClick={ () => like(item.commentId, !item.liked) }>
-              <ThumbUpAltTwoTone />
+              <ThumbUpAlt />
             </span>
 
             { formatDistance(item.time, new Date()) }
@@ -134,12 +134,12 @@ const Comments: React.SFC<CommentsProps> = observer(props => {
       >
         <div className={ styles.scroller }>
           <div className={ styles.hotList }>
-            <h3>Hot Comments</h3>
+            <h3>热评</h3>
             { renderHotList() }
           </div>
 
           <div className={ styles.newestList }>
-            <h3>Newest Comments</h3>
+            <h3>最新评论</h3>
             { renderNewestList() }
           </div>
         </div>

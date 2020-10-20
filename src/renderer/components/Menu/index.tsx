@@ -85,40 +85,40 @@ const Menu: React.SFC = observer(() => {
               <Link
                 onClick={close}
                 to="/"
-              >Home</Link>
+              >梦的开始</Link>
             </p>
             <p>
               <Link
                 onClick={ close }
                 to="/search"
-              >Search</Link>
+              >众里寻它千百度</Link>
             </p>
             <p>
               <Link
                 onClick={ close }
                 to="/playlist/全部"
-              >Playlist</Link>
+              >山河入梦</Link>
             </p>
             <p>
               <Link
                 onClick={ close }
                 to="/top"
-              >Top</Link>
+              >排行榜</Link>
             </p>
             <p>
               <Link
                 onClick={ close }
                 to="/fm"
-              >Made For You</Link>
+              >私人订制</Link>
             </p>
           </div>
         </div>
 
-        <div className={ styles.social }>
+        {/* <div className={ styles.social }>
           <IconButton
             onClick={ e => {
               e.preventDefault()
-              shell.openExternal('https://github.com/daihy8759/ieaseMusic')
+              shell.openExternal('https://github.com/typeofNaN/waiting')
               close()
             } }
           >
@@ -127,7 +127,7 @@ const Menu: React.SFC = observer(() => {
               />
             </SvgIcon>
           </IconButton>
-        </div>
+        </div> */}
       </section>
     </div>
   )

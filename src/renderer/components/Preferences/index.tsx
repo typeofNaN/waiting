@@ -1,6 +1,6 @@
 import { useStore } from '@/context'
 import { Button, Switch, Theme, CircularProgress, Typography } from '@material-ui/core'
-import { FlashOnTwoTone, VerifiedUserTwoTone } from '@material-ui/icons'
+import { FlashOn, VerifiedUser } from '@material-ui/icons'
 import { createStyles, makeStyles } from '@material-ui/styles'
 import classnames from 'classnames'
 import Modal from 'components/Modal'
@@ -70,14 +70,14 @@ const Preferences: React.SFC = observer(() => {
     if (isConnected()) {
       return (
         <>
-          <VerifiedUserTwoTone className={ classes.leftIcon } />
+          <VerifiedUser className={ classes.leftIcon } />
           Connected to Last.fm
         </>
       )
     }
     return (
       <>
-        <FlashOnTwoTone className={ classes.leftIcon } />
+        <FlashOn className={ classes.leftIcon } />
         Connect to Last.fm
       </>
     )

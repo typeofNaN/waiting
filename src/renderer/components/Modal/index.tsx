@@ -24,7 +24,7 @@ const styles = (theme: Theme) =>
   })
 
 const Transition = React.forwardRef<unknown, TransitionProps>(function Transition(props, ref) {
-  return <Zoom ref={ ref } {...props} />
+  return <Zoom ref={ ref } { ...props } />
 })
 
 export interface DialogTitleProps extends WithStyles<typeof styles> {

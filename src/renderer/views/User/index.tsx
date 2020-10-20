@@ -59,7 +59,7 @@ const User: React.FC<UserProps> = observer(props => {
           </h2>
 
           <p className={ styles.played }>
-            <span>{ helper.humanNumber(e.played) } Played</span>
+            <span>{ helper.humanNumber(e.played) } 次播放</span>
           </p>
         </Link>
       )

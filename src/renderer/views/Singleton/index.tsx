@@ -63,7 +63,8 @@ const Singleton: React.SFC = observer(() => {
           style={ {
             filter: `drop-shadow(3mm 6mm 12mm ${colors.randomColor()})`
           } }
-          ref={ circleRef }>
+          ref={ circleRef }
+        >
           <ProgressImage
             { ...{
               width: 260,

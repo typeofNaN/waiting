@@ -127,6 +127,7 @@ async function getUsers(keywords: string, offset = 0) {
             type: 1002
         });
         if (res.data.code === 200) {
+            console.log(1)
             users = res.data.result.userprofiles.map((e: any) => {
                 return {
                     id: e.userId,

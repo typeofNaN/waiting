@@ -236,7 +236,7 @@ const Player: React.FC<PlayerProps> = observer(props => {
               : <PlayArrowSharp />
           }
 
-          <span className={ styles.index }>{ index }</span>
+          <span className={ styles.index }>{ index + 1 }</span>
 
           <span className={ styles.name } title={ e.name} >{ e.name }</span>
 
@@ -292,7 +292,7 @@ const Player: React.FC<PlayerProps> = observer(props => {
                 marginTop: 20
               } }
             >
-              <span>{ meta.company || `${helper.humanNumber(meta.played)} Played` }</span>
+              <span>{ meta.company || `${helper.humanNumber(meta.played)} 次播放` }</span>
             </p>
           </summary>
 
@@ -341,8 +341,8 @@ const Player: React.FC<PlayerProps> = observer(props => {
 
           <div className={ styles.list }>
             <header>
-              <span onClick={ () => player.toggleSearch(true) }>Track/SEARCH</span>
-              <span>Time</span>
+              <span onClick={ () => player.toggleSearch(true) }>搜索</span>
+              <span>时长</span>
             </header>
             <ul ref={ listRef }>{ renderList() }</ul>
           </div>

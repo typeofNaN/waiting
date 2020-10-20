@@ -84,7 +84,7 @@ const Playlist: React.SFC<IPlaylistProps> = observer(props => {
                     <p>
                       <Link to={ e.user.link }>{ e.user.name }</Link>
                     </p>
-                    <span>{ helper.humanNumber(e.played) } Played</span>
+                    <span>{ helper.humanNumber(e.played) } 次播放</span>
                   </aside>
                 </article>
               </Grid>

@@ -2,13 +2,13 @@ import { useStore } from '@/context'
 import { IconButton } from '@material-ui/core'
 import { red } from '@material-ui/core/colors'
 import {
-  CloudDownloadTwoTone,
-  FastForwardTwoTone,
-  FavoriteBorderTwoTone,
-  FavoriteTwoTone,
-  PauseCircleOutlineTwoTone,
-  PlayCircleOutlineTwoTone,
-  DeleteForeverTwoTone
+  CloudDownload,
+  FastForward,
+  FavoriteBorder,
+  Favorite,
+  PauseCircleOutline,
+  PlayCircleOutline,
+  DeleteForever
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import Controller from 'components/Controller'
@@ -160,7 +160,7 @@ const FM: React.SFC<IFMProps> = observer(props => {
                 <Link
                   title={ song.album.name }
                   to="/comments"
-                >{ helper.humanNumber(commentsTotal) } Comments</Link>
+                >{ helper.humanNumber(commentsTotal) } 条评论</Link>
               </span>
             </p>
           </aside>
@@ -182,19 +182,19 @@ const FM: React.SFC<IFMProps> = observer(props => {
 
         <div>
           <IconButton onClick={ () => (liked ? unlike(song) : like(song)) }>
-            { liked ? <FavoriteTwoTone className={ classes.liked } /> : <FavoriteBorderTwoTone /> }
+            { liked ? <Favorite className={ classes.liked } /> : <FavoriteBorder /> }
           </IconButton>
           <IconButton onClick={ () => ban(song.id) }>
-            <DeleteForeverTwoTone />
+            <DeleteForever />
           </IconButton>
           <IconButton>
-            <CloudDownloadTwoTone />
+            <CloudDownload />
           </IconButton>
           <IconButton onClick={ () => play() }>
-            { isPlaying() ? <PauseCircleOutlineTwoTone /> : <PlayCircleOutlineTwoTone /> }
+            { isPlaying() ? <PauseCircleOutline /> : <PlayCircleOutline /> }
           </IconButton>
           <IconButton onClick={ () => next() }>
-            <FastForwardTwoTone />
+            <FastForward />
           </IconButton>
         </div>
       </section>

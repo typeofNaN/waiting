@@ -49,6 +49,13 @@
   overflow-y: auto;
 }
 
+.userlist {
+  height: calc(100vh - 32px - 93px - 32px);
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .artist {
   display: flex;
   justify-content: flex-start;
@@ -106,6 +113,7 @@
   align-items: center;
   margin-bottom: 20px;
   transform: translateY(12px);
+  flex: 0 0 20%;
 
   figure {
     border-radius: 64;

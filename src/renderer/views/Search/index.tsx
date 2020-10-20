@@ -1,6 +1,6 @@
 import { useStore } from '@/context'
 import { Box, IconButton, Tab, Tabs, Typography } from '@material-ui/core'
-import { FavoriteSharp, StarTwoTone } from '@material-ui/icons'
+import { FavoriteSharp, Star } from '@material-ui/icons'
 import classnames from 'classnames'
 import Header from 'components/Header'
 import ProgressImage from 'components/ProgressImage'
@@ -41,14 +41,16 @@ const TabPanel = (props: TabPanelProps) => {
   )
 }
 
+
 const Search: React.FC = observer(() => {
   const { search, artist } = useStore()
   const searchRef = React.useRef<HTMLInputElement>()
   const [value, setValue] = React.useState(0)
+  const { loading, getPlaylists, getAlbums, getArtists, getUsers } = search
 
   const loadMore = (e: any) => {
-    const { loading } = search
-    if (loading) {
+    const { searching } = search
+    if (searching) {
       return
     }
     const container = e.target
@@ -62,8 +64,10 @@ const Search: React.FC = observer(() => {
           break
         case 3:
           search.loadMoreUsers()
+          break
         default:
           search.loadMorePlaylists()
+          break
       }
     }
   }
@@ -76,15 +80,15 @@ const Search: React.FC = observer(() => {
     if (e.keyCode !== 13) {
       return
     }
-    searchByKeyword(e.target.value)
+    searchByKeyword(e.target.value, value)
   }
 
-  const searchByKeyword = (searchValue: any) => {
+  const searchByKeyword = (searchValue: any, newValue: number) => {
     const keyword = searchValue && searchValue.trim()
     if (!keyword) {
       return
     }
-    switch (value) {
+    switch (newValue) {
       case 1:
         getAlbums(keyword)
         break
@@ -93,8 +97,10 @@ const Search: React.FC = observer(() => {
         break
       case 3:
         getUsers(keyword)
+        break
       default:
         getPlaylists(keyword)
+        break
     }
   }
 
@@ -132,10 +138,10 @@ const Search: React.FC = observer(() => {
               <span className={ styles.star }>
                 <span>{helper.humanNumber(e.star)}</span>
 
-                <StarTwoTone />
+                <Star />
               </span>
 
-              <span className={ styles.played }>{ helper.humanNumber(e.played) } Played</span>
+              <span className={ styles.played }>{ helper.humanNumber(e.played) } 次播放</span>
             </div>
 
             <span className={ styles.tracks }>{ e.size } Tracks</span>
@@ -166,7 +172,7 @@ const Search: React.FC = observer(() => {
         >
           <ProgressImage
             { ...{
-              src: e.cover,
+              src: e.picUrl,
               height: 40,
               width: 40
             } }
@@ -177,7 +183,7 @@ const Search: React.FC = observer(() => {
 
             <span>{ e.artist.name }</span>
 
-            <span className={ styles.publish }>{ format(e.publishTime, 'L') }</span>
+            {/* <span className={ styles.publish }>{ e.publishTime }</span> */}
           </aside>
         </Link>
       )
@@ -260,11 +266,11 @@ const Search: React.FC = observer(() => {
       )
     }
 
-    return users.map((e: any) => {
+    return users.map((e: any, i: number) => {
       return (
         <div
           className={ styles.user }
-          key={ e.link }
+          key={ i }
         >
           <Link
             onClick={ reset }
@@ -287,10 +293,8 @@ const Search: React.FC = observer(() => {
 
   const handleTabChange = async (_: any, newValue: any) => {
     await setValue(newValue)
-    searchByKeyword(searchRef.current.value)
+    searchByKeyword(searchRef.current.value, newValue)
   }
-
-  const { loading, getPlaylists, getAlbums, getArtists, getUsers } = search
 
   return (
     <div className={ styles.container }>
@@ -307,7 +311,7 @@ const Search: React.FC = observer(() => {
             ref={ searchRef }
             type="text"
             onKeyUp={ doSearch }
-            placeholder="Search ..."
+            placeholder="搜索 ..."
           />
         </summary>
         <Tabs
@@ -315,19 +319,19 @@ const Search: React.FC = observer(() => {
           onChange={ handleTabChange }
         >
           <Tab
-            label="Playlist"
+            label="歌单"
             { ...a11yProps(0) }
           />
           <Tab
-            label="Album"
+            label="专辑"
             { ...a11yProps(1) }
           />
           <Tab
-            label="Singer"
+            label="歌手"
             { ...a11yProps(2) }
           />
           <Tab
-            label="User"
+            label="用户"
             { ...a11yProps(3) }
           />
         </Tabs>
@@ -384,7 +388,7 @@ const Search: React.FC = observer(() => {
                       <span>Loading ...</span>
                     </div>
                   )
-                : renderAlbums()
+                : renderArtists()
             }
           </section>
         </TabPanel>
@@ -393,7 +397,7 @@ const Search: React.FC = observer(() => {
           index={ 3 }
         >
           <section
-            className={ styles.list }
+            className={ styles.userlist }
             onScroll={ loadMore }
           >
             {
@@ -403,7 +407,7 @@ const Search: React.FC = observer(() => {
                       <span>Loading ...</span>
                     </div>
                   )
-                : renderAlbums()
+                : renderUsers()
             }
           </section>
         </TabPanel>

@@ -68,7 +68,7 @@ const helper = {
   },
   getRate(song: any) {
     if (!song.data || !song.data.bitRate) {
-      return 'Unknow kbps'
+      return '未知'
     }
 
     if (song.data.isFlac) {

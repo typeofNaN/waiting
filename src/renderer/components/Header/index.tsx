@@ -1,6 +1,6 @@
 import { useStore } from '@/context'
 import { IconButton } from '@material-ui/core'
-import { BarChartTwoTone, MoreVertTwoTone } from '@material-ui/icons'
+import { BarChart, MoreVert } from '@material-ui/icons'
 import classnames from 'classnames'
 import { observer } from 'mobx-react-lite'
 import * as React from 'react'
@@ -38,7 +38,7 @@ const Header: React.SFC<IHeaderProps> = observer(props => {
     if (showPlaylist) {
       return (
         <IconButton onClick={ () => player.subscribe(true) }>
-          <BarChartTwoTone />
+          <BarChart />
         </IconButton>
       )
     }
@@ -57,14 +57,14 @@ const Header: React.SFC<IHeaderProps> = observer(props => {
           className="styles.subscribed"
           onClick={ () => player.subscribe(false) }
         >
-          <BarChartTwoTone />
+          <BarChart />
         </IconButton>
       )
     }
 
     return (
       <IconButton onClick={ () => player.subscribe(true) }>
-        <BarChartTwoTone />
+        <BarChart />
       </IconButton>
     )
   }
@@ -72,7 +72,7 @@ const Header: React.SFC<IHeaderProps> = observer(props => {
   const renderMenu = () => {
     return (
       <IconButton onClick={ () => menu.toggle(true) }>
-        <MoreVertTwoTone />
+        <MoreVert />
       </IconButton>
     )
   }
