@@ -1,43 +1,42 @@
-import lyric from './common/lyric';
+import lyric from './common/lyric'
 
 async function getLyric(id: number) {
-    if (!id) {
-        return;
-    }
-    const result: any = {};
-    try {
-        const res = await lyric({ id });
-        if (res.data.code === 200) {
-            const { data } = res;
-            if (data.lrc === undefined) {
-                return result;
-            }
-            const lyrics = data.lrc.lyric.split('\n');
-            lyrics.forEach((e: any) => {
-                const match = e.match(/\[.+\]/);
+  if (!id) {
+    return
+  }
+  const result: any = {}
+  try {
+    const res = await lyric({ id })
+    if (res.data.code === 200) {
+      const { data } = res
+      if (data.lrc === undefined) {
+        return result
+      }
+      const lyrics = data.lrc.lyric.split('\n')
+      lyrics.forEach((e: any) => {
+        const match = e.match(/\[.+\]/)
 
-                if (!match) {
-                    return;
-                }
-
-                const timestamp = match[0]
-                    .replace(/\D/g, ':')
-                    .replace(/^:|:$/g, '')
-                    .split(':');
-                if (!timestamp[0]) {
-                    return;
-                }
-                const content = e.replace(/\[.+\]/, '');
-                const times =
-                    parseInt(timestamp[0]) * 60 * 1000 + parseInt(timestamp[1]) * 1000 + parseInt(timestamp[2]);
-
-                result[times] = content;
-            });
+        if (!match) {
+          return
         }
-    } catch (e) {
-        console.error(e);
+
+        const timestamp = match[0]
+          .replace(/\D/g, ':')
+          .replace(/^:|:$/g, '')
+          .split(':')
+        if (!timestamp[0]) {
+          return
+        }
+        const content = e.replace(/\[.+\]/, '')
+        const times = parseInt(timestamp[0]) * 60 * 1000 + parseInt(timestamp[1]) * 1000 + parseInt(timestamp[2])
+
+        result[times] = content
+      })
     }
-    return result;
+  } catch (e) {
+    console.error(e)
+  }
+  return result
 }
 
-export default getLyric;
+export default getLyric
