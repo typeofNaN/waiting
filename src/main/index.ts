@@ -482,15 +482,35 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
-    show: false,
+    // show: false,
+    resizable: false,
+    skipTaskbar: false,
+    transparent: false,
+    autoHideMenuBar: true,
+    useContentSize: true,
     width: 800,
     height: 520,
+    frame: false,
     backgroundColor: 'none',
-    titleBarStyle: 'hiddenInset',
+    // titleBarStyle: 'hiddenInset',
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true
     }
+    // height: 520,
+    // useContentSize: true,
+    // width: 800,
+    // frame: false,
+    // resizable: false,
+    // skipTaskbar: false,
+    // transparent: false,
+    // title: '网愈云音乐',
+    // autoHideMenuBar: true,
+    // x: 0,
+    // y: 0,
+    // webPreferences: {
+    //   nodeIntegration: true
+    // }
   })
 
   mainWindow.loadURL(winURL)

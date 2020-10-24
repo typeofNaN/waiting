@@ -2,7 +2,7 @@
   "name": "net-cure-cloud-music",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/main.js",
   "scripts": {
     "start-renderer-dev": "webpack-dev-server --config webpack/webpack.renderer.dev.config.js",
     "start-main-dev": "webpack --config webpack/webpack.main.config.js && electron ./dist/main.js",
@@ -37,14 +37,11 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "installerIcon": "./build/icon.icns",
-      "uninstallerIcon": "./build/icon.icns",
-      "installerHeader": "./build/icon.icns",
-      "installerHeaderIcon": "./build/icon.icns"
+      "allowToChangeInstallationDirectory": true
     },
     "files": [
-      "dist/electron/**/*"
+      "dist/",
+      "!node_modules"
     ],
     "dmg": {
       "contents": [
@@ -60,15 +57,6 @@
           "type": "file"
         }
       ]
-    },
-    "mac": {
-      "icon": "build/icons/icon.icns"
-    },
-    "win": {
-      "icon": "build/icons/icon.ico"
-    },
-    "linux": {
-      "icon": "build/icons"
     }
   },
   "dependencies": {
