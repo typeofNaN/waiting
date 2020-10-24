@@ -2,6 +2,8 @@ import { useStore } from '@/context'
 import { IconButton } from '@material-ui/core'
 import { BarChart, MoreVert } from '@material-ui/icons'
 import classnames from 'classnames'
+import { ipcRenderer } from 'electron'
+import { Close, Remove, ArrowBack } from '@material-ui/icons'
 import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import * as styles from './index.less'
@@ -17,7 +19,31 @@ interface IHeaderProps {
 const Header: React.SFC<IHeaderProps> = observer(props => {
   const { controller, menu, me, player } = useStore()
   const { song } = controller
+  const close = () => ipcRenderer.send('goodbye')
+  const min = () => ipcRenderer.send('minimize')
   const goBack = () => window.history.back()
+
+  const renderClose = () => {
+    return (
+      <span
+        className={ styles.close }
+        onClick={ close }
+      >
+        <Close className={ styles.btn }></Close>
+      </span>
+    )
+  }
+
+  const renderMin = () => {
+    return (
+      <span
+        className={ styles.min }
+        onClick={ min }
+      >
+        <Remove className={ styles.btn }></Remove>
+      </span>
+    )
+  }
 
   const renderBack = () => {
     const { showBack = true } = props
@@ -28,7 +54,9 @@ const Header: React.SFC<IHeaderProps> = observer(props => {
       <span
         className={ styles.backward }
         onClick={ goBack }
-      />
+      >
+        <ArrowBack className={ styles.btn }></ArrowBack>
+      </span>
     )
   }
 
@@ -119,7 +147,10 @@ const Header: React.SFC<IHeaderProps> = observer(props => {
       <section
         className={ classnames({
           [styles.transparent]: transparent
-        }) }>
+        }) }
+      >
+        { renderClose() }
+        { renderMin() }
         { renderBack() }
         <div>
           { renderFav() }

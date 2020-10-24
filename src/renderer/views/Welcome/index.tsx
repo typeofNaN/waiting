@@ -6,6 +6,7 @@ import { ArrowForward } from '@material-ui/icons'
 import Controller from 'components/Controller'
 import Indicator from 'components/Indicator'
 import Loader from 'components/Loader'
+import Header from 'components/Header'
 import ProgressImage from 'components/ProgressImage'
 import formatDistance from 'date-fns/formatDistance'
 import { observer } from 'mobx-react-lite'
@@ -232,6 +233,12 @@ const Welcome: React.SFC = observer(() => {
 
   return (
     <div className={ styles.container }>
+      <Header
+        {  ...{
+          transparent: true,
+          showBack: true
+        } }
+      />
       <Loader show={ home.loading } />
       <main>
         <aside className={ styles.navs }>

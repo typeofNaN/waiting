@@ -40,15 +40,53 @@
 
 .transparent {
   background: transparent !important;
+  &:hover {
+    .btn {
+      display: block !important;
+    }
+  }
 }
 
-.backward {
+.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 13px;
+  left: 10px;
   height: 12px;
   width: 12px;
   border-radius: 12px;
   border: thin solid #ddd;
-  margin-left: 58px;
-  background: #eee;
+  background-color: #F56C6C;
+  box-sizing: border-box;
+}
+
+.btn {
+  display: none !important;
+  font-size: 10px !important;
+  color: #333 !important;
+}
+
+.min {
+  position: absolute;
+  top: 13px;
+  left: 30px;
+  height: 12px;
+  width: 12px;
+  border-radius: 12px;
+  border: thin solid #ddd;
+  background-color: #E6A23C;
+  box-sizing: border-box;
+}
+
+.backward {
+  margin-left: 36px;
+  height: 12px;
+  width: 12px;
+  border-radius: 12px;
+  border: thin solid #ddd;
+  background-color: #67C23A;
   box-sizing: border-box;
 }
 

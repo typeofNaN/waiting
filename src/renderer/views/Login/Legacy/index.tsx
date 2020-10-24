@@ -4,6 +4,7 @@ import { Button, CircularProgress, Typography } from '@material-ui/core'
 import { ArrowBackSharp } from '@material-ui/icons'
 import classnames from 'classnames'
 import { observer } from 'mobx-react-lite'
+import Header from 'components/Header'
 import * as React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
 import * as styles from './index.less'
@@ -53,20 +54,26 @@ const Legacy: React.FC<ILegacyProps> = observer(props => {
   const { match } = props
   return (
     <div className={ styles.container }>
-      <Button
+      <Header
+        {  ...{
+          transparent: true,
+          showBack: true
+        } }
+      />
+      {/* <Button
         className={ styles.back }
         component={ AdapterLink }
         to="/"
       >
         <ArrowBackSharp />
         听音乐，享心情~
-      </Button>
+      </Button> */}
 
       <header>
         <h1>Sign in</h1>
         <p>开启您的专属私人音乐~</p>
       </header>
-      <section>
+      <section className={styles.inputsec}>
         <input
           ref={ phoneRef }
           type="text"

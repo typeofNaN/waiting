@@ -488,10 +488,10 @@ function createWindow () {
     transparent: false,
     autoHideMenuBar: true,
     useContentSize: true,
+    title: '网愈云音乐',
     width: 800,
     height: 520,
     frame: false,
-    backgroundColor: 'none',
     // titleBarStyle: 'hiddenInset',
     webPreferences: {
       webSecurity: false,
@@ -552,7 +552,7 @@ app.on('activate', () => {
   }
 })
 
-ipcMain.on('close', () => {
+ipcMain.on('goodbye', () => {
   mainWindow.close()
 })
 ipcMain.on('minimize', () => {
