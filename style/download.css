@@ -1,0 +1,56 @@
+#main {
+  padding-top: 150px;
+}
+
+#main .download {
+  display: flex;
+  margin-top: 120px;
+}
+
+.platform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  color: #606266;
+}
+
+.platform span {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.platform .desc {
+  margin: 20px 0;
+}
+
+.download_box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
+  width: 220px;
+  height: 80px;
+  border: 1px solid #606266;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #606266;
+  background-color: #fff;
+}
+
+.download_box svg {
+  width: 24px;
+  height: 24px;
+  fill: #606266;
+}
+
+.download_box:hover {
+  color: #fff;
+  border: 1px solid #ea4c89;
+  background-color: #ea4c89;
+}
+
+.download_box:hover svg {
+  fill: #fff;
+}
