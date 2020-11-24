@@ -85,19 +85,19 @@ const Menu: React.SFC = observer(() => {
               <Link
                 onClick={close}
                 to="/"
-              >梦的开始</Link>
+              >首页</Link>
             </p>
             <p>
               <Link
                 onClick={ close }
                 to="/search"
-              >众里寻它千百度</Link>
+              >搜索</Link>
             </p>
             <p>
               <Link
                 onClick={ close }
                 to="/playlist/全部"
-              >山河入梦</Link>
+              >播放列表</Link>
             </p>
             <p>
               <Link
@@ -109,7 +109,7 @@ const Menu: React.SFC = observer(() => {
               <Link
                 onClick={ close }
                 to="/fm"
-              >私人订制</Link>
+              >私人专属</Link>
             </p>
           </div>
         </div>

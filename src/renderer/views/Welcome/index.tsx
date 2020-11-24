@@ -258,10 +258,10 @@ const Welcome: React.SFC = observer(() => {
             className={ styles.menu }
           >
             <ListItemLink href="#/search">
-              <ListItemText primary="众里寻它千百度" />
+              <ListItemText primary="搜索" />
             </ListItemLink>
             <ListItemLink href="#/playlist/全部">
-              <ListItemText primary="山河入梦" />
+              <ListItemText primary="播放列表" />
             </ListItemLink>
             <ListItemLink href="#/top">
               <ListItemText primary="排行榜" />
@@ -272,7 +272,7 @@ const Welcome: React.SFC = observer(() => {
                 [styles.playing]: controller.playlist.id === 'PERSONAL_FM'
               }) }
             >
-              <ListItemText primary="私人订制" />
+              <ListItemText primary="私人专属" />
             </ListItemLink>
           </List>
         </aside>

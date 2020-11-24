@@ -7,7 +7,7 @@ interface IArtistAlbumQuery {
 }
 // 歌手专辑列表
 export default (query: IArtistAlbumQuery) => {
-  const path = '/artist/albums'
+  const path = '/artist/album'
   const data = {
     id: query.id,
     limit: query.limit || 30,

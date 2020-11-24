@@ -5,7 +5,7 @@ interface IArtistsQuery {
 }
 // 歌手单曲
 export default (query: IArtistsQuery) => {
-  const path = `/artists/${query.id}`
+  const path = `/artists`
   const data = {
     id: query.id
   }
