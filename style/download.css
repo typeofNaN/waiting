@@ -1,5 +1,5 @@
 #main {
-  padding-top: 150px;
+  padding-top: 60px;
 }
 
 #main .download {
@@ -8,11 +8,25 @@
 }
 
 .platform {
+  margin-bottom: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 50%;
   color: #606266;
+}
+
+@media(max-width: 600px) {
+  #main .download {
+    flex-direction: column;
+  }
+  .platform {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    color: #606266;
+  }
 }
 
 .platform span {
@@ -30,8 +44,8 @@
   align-items: center;
   flex-direction: column;
   margin-top: 30px;
-  width: 220px;
-  height: 80px;
+  width: 360px;
+  height: 100px;
   border: 1px solid #606266;
   border-radius: 4px;
   cursor: pointer;
